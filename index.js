@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/autenticacion_route.js'; // Importar las rutas de autenticación
 import entradasRoutes from './routes/post_routes.js'; // Importar las rutas de entradas
 import usersRoutes from './routes/usersRoutes.js'; // Importar las rutas de usuarios
+import categoriasRoutes from './routes/categorias_routes.js'; // Importar las rutas de categorias
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use('/Api/v1/auth', authRoutes );
 app.use('/Api/v1/entradas', entradasRoutes);
 
 app.use('/Api/v1/users', usersRoutes);
+
+app.use('/Api/v1/categorias', categoriasRoutes);
 
 
 

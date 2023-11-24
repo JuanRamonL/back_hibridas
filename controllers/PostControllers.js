@@ -3,7 +3,7 @@ import {Post} from '../models/Post.js';
 
 
 export const entradas = async (req, res) => {
-    const posts = await Post.find().populate({ path: "autor", select: "username" });
+    const posts = await Post.find().populate({ path: "autor", select: "username" }).populate({ path: "categories", select: "name" });
     res.json({
         seccess: true,
         posts
@@ -14,7 +14,7 @@ export const entradasPorId = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const post = await Post.findById(id).populate({ path: "autor", select: "username" });
+        const post = await Post.findById(id).populate({ path: "autor", select: "username" }).populate({ path: "categories", select: "name" });
 
         if (!post) {
             return res.status(404).json({ Estado: "No se pudo encontrar la entrada" });
@@ -30,16 +30,18 @@ export const entradasPorId = async (req, res) => {
 
 export const nuevaEntrada = async (req, res) => {
     try {
-        const { title, desc, autor } = req.body;
+        const { title, desc, autor, categories } = req.body;
 
         console.log("nombre: " + autor);
         console.log("title: " + title);
         console.log("desc: " + desc);
+        console.log("categories: " + categories);
 
         let post = new Post({
             title,
             desc,
             autor,
+            categories,
         });
 
         await post.save();
@@ -47,7 +49,7 @@ export const nuevaEntrada = async (req, res) => {
 
         res.status(201).json({Estado: "Posteo creado correctamente", post});
     } catch (error) {
-        res.status(404).json({Estado: "No se pudo crear la entrada"});
+        res.status(404).json({Estado: "No se pudo crear la entrada, verifique que el usuario y la categoria existan"});
     }
 };
 
@@ -70,6 +72,8 @@ export const editarEntrada = async (req, res) => {
         const { id } = req.params;
         const { title, desc } = req.body;
         const post = await Post.findByIdAndUpdate(id, {title, desc});
+
+        await post.save();
 
         res.status(200).json({Estado: "Posteo actualizado correctamente", post});
         
