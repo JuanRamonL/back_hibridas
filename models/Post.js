@@ -14,9 +14,9 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
-    autorId: {
+    autor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "usuario", // usar nombre que pusiste en el export del modelo
         required: false,
     },
     categories: {
