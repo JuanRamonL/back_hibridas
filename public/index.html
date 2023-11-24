@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Ennoia</title>
+</head>
+<body>
+    <form id="form">
+        <input type="email" name="email" id="email" placeholder="Email" value="juan_lopez@gmail.com" id="email">
+        <input type="password" name="password" id="password" placeholder="Contraseña" value="12345678" id="password">
+
+
+        <button type="submit"> Ingresar</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('form');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+
+        form.addEventListener('submit',  async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch('Api/v1/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+
+                    body: JSON.stringify({
+                        email: email.value,
+                        password: password.value
+                    })
+                });
+                console.log(res.ok, res.status, res.statusText);
+
+                const {token} = await res.json();
+
+                //console.log(data);
+            }catch(error) {
+                console.log(error);
+            }
+        }); 
+    </script>
+</body>
+</html>

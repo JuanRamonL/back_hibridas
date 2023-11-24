@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruta protegida</title>
+</head>
+<body>
+    <h1>Ruta protegida</h1>
+    <div >
+        <p id="nombre">Nombre: </p>
+        <p id="email">Email: </p>
+    </div>
+    <form>
+        <button type="submit" id="logout">Cerrar sesión</button>
+    </form>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', async e => {
+            try{
+
+                const resToken = await fetch('/Api/v1/auth/refresh', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+
+                const {token} = await resToken.json();
+
+
+                const res = await fetch('/Api/v1/auth/protected', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Bearer " + token,
+                    },
+                    credentials: 'include',
+                });  
+
+
+                console.log(res.ok, res.status);
+                
+                const data = await res.json();
+
+                console.log(data);
+
+                if(res.ok) {
+                const email = document.getElementById('email');
+                const nombre = document.getElementById('nombre');
+                const apellido = document.getElementById('apellido');
+
+                    email.innerHTML = `Email: ${data.email}`;
+                    nombre.innerHTML = `Nombre: ${data.nombre} ${data.apellido}`;
+                }
+            }
+            catch(error){
+                console.log(error);
+            };
+            
+        })
+
+        const logout = document.getElementById('logout');
+
+        logout.addEventListener('click', async () => {
+            try{
+                const res = await fetch('/Api/v1/auth/logout', {
+                    method: 'POST',
+                });
+                console.log(res);
+            }
+            catch(error){
+                console.log(error);
+            };
+        })
+
+    </script>
+</body>
+</html>
