@@ -21,23 +21,22 @@ export const entradasPorId = async (req, res) => {
 
 export const nuevaEntrada = async (req, res) => {
     try {
+        const { title, desc, autorId } = req.body;
 
-        const { title, desc , username } = req.body;
-
-        console.log("nombre: " + username);
+        console.log("nombre: " + autorId);
         console.log("title: " + title);
         console.log("desc: " + desc);
 
         let post = new Post({
             title: title,
             desc: desc,
-            username: username
+            autorId: autorId,
         });
 
         await post.save();
 
 
-        res.json({Estado: "Posteo creado correctamente"});
+        res.status(200).json({Estado: "Posteo creado correctamente", post});
     } catch (error) {
         res.status(404).json({Estado: "No se pudo crear la entrada"});
     }

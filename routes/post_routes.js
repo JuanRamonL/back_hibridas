@@ -6,7 +6,7 @@ router.get('/', entradas);
 
 router.get('/:id', entradasPorId);
 
-router.post('/nueva-entrada', nuevaEntrada);
+router.post('/', nuevaEntrada);
 
 router.delete('/:id/eliminar', eliminarEntrada);
 
