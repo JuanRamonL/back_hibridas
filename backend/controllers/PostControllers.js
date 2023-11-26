@@ -30,16 +30,18 @@ export const entradasPorId = async (req, res) => {
 
 export const nuevaEntrada = async (req, res) => {
     try {
-        const { title, desc, autor, categories } = req.body;
+        const { title, desc, photo, autor, categories } = req.body;
 
         console.log("nombre: " + autor);
         console.log("title: " + title);
         console.log("desc: " + desc);
+        console.log("photo: " + photo);
         console.log("categories: " + categories);
 
         let post = new Post({
             title,
             desc,
+            photo,
             autor,
             categories,
         });
