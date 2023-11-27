@@ -23,7 +23,8 @@ function Header() {
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-2">
             <div className="container">
-                <Link to="/" className="navbar-brand">
+                <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
+                    <img src="/favicon.png" className="img-fluid w-25" />
                     <span className="m-0 ff-display h4 fw-bold">Blog</span>
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
