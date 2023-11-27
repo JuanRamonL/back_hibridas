@@ -27,6 +27,7 @@ function Login() {
 
         if (response.ok) {
             localStorage.setItem('token', res.token)
+            localStorage.setItem('rol', res.rol)
             navigate('/')
         } else if(!response.ok && password == '' ) {
             alert(res.errors[0].msg)

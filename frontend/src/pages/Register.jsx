@@ -6,6 +6,7 @@ function Register() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [rol] = useState('user')
 
     const navigate = useNavigate()
 
@@ -17,7 +18,7 @@ function Register() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, email, password })
+            body: JSON.stringify({ username, email, password, rol })
         })
 
         console.log(response)

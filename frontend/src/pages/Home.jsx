@@ -3,6 +3,8 @@ import Posts from "../components/blog/Posts"
 
 function Home() {
 
+    const getRol = localStorage.getItem('rol')
+
     return (
         <>
             <div className="container">
@@ -17,10 +19,14 @@ function Home() {
                 <div className="mb-5 pb-5">
                     <div className="d-flex align-items-center justify-content-between mb-4">
                         <h2 className="fw-bold">Posteos recientes</h2>
-                        <Link to="/post/create" className="btn btn-primary btn-sm d-flex align-items-center gap-2">
-                            <i className='bx bx-plus fs-5'></i>
-                            Crear Post
-                        </Link>
+                        {
+                            getRol !== 'user' ?
+                            <Link to="/post/create" className="btn btn-primary btn-sm d-flex align-items-center gap-2">
+                                <i className='bx bx-plus fs-5'></i>
+                                Crear Post
+                            </Link>
+                            : ''
+                        }
                     </div>
                     <div className="row g-4">
                         <Posts />

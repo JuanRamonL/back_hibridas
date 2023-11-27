@@ -19,7 +19,7 @@ const usuariosSchema = new mongoose.Schema({
     },
     rol: {
         type: String,
-        required: false,
+        required: true,
     },
     profilePic: {
         type: String,

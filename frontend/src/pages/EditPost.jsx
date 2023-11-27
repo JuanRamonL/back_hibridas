@@ -1,15 +1,30 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import JoditEditor from 'jodit-react'
 
-function CreatePost() {
+function EditPost() {
 
-    const [title, setTitle] = useState("")
-    const [desc, setDesc] = useState("")
-    const [photo, setPhoto] = useState("")
-    const [categories, setCategories] = useState('')
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [loading, setLoading] = useState(false)
+    const { id } = useParams()
+
+    const [data, setData] = useState({
+        title: "",
+        desc: "",
+        photo: ""
+    });
+    const [loading, setLoading] = useState(true)
+
+    const handleTitle = (e) => {
+        setData({ ...data, title: e.target.value });
+    };
+
+    const handleDesc = (value) => {
+        setData({ ...data, desc: value });
+    };
+
+    const handlePhoto = (e) => {
+        setData({ ...data, photo: e.target.value });
+    };
+
     const navigate = useNavigate()
 
     const editor = useRef(null)
@@ -17,31 +32,26 @@ function CreatePost() {
         placeholder: "Descripción del post"
     }
 
-    const handleDesc = (e) => {
-        setDesc(e)
-    }
-
     useEffect(() => {
-        fetch("http://localhost:2023/Api/v1/categorias")
-            .then(res => res.json())
-            .then(data => setCategories(data))
-    }, [])
+        setLoading(true)
+        fetch(`http://localhost:2023/Api/v1/entradas/${id}`)
+            .then(response => response.json())
+            .then(data => setData(data))
+    }, [id])
 
-    const handleSubmit = (e) => {
+    const handleSubmitEdit = (e) => {
         e.preventDefault()
-
-        const newPost = { title, desc, photo, categories: selectedCategory }
 
         setLoading(true)
 
-        fetch("http://localhost:2023/Api/v1/entradas", {
-            method: "POST",
+        fetch(`http://localhost:2023/Api/v1/entradas/${id}/actualizar`, {
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newPost)
+            body: JSON.stringify(data)
         }).then(() => {
-            console.log("Se agrego el nuevo post")
+            console.log("Se editó el nuevo post")
+            console.log(data);
             setLoading(false)
-            console.log(newPost);
             navigate("/")
         })
     }
@@ -50,7 +60,7 @@ function CreatePost() {
         <>
             <div className="container create-post-section">
                 <h1 className="text-center py-5 fw-bold">Crear Post</h1>
-                <form action="#" onSubmit={handleSubmit} method="POST">
+                <form action="#" onSubmit={handleSubmitEdit}>
                     <div className="row justify-content-center">
                         <div className="col-12 col-lg-9">
                             <label className="form-label w-100">
@@ -58,19 +68,17 @@ function CreatePost() {
                                 <input
                                     type="text"
                                     className="form-control mt-1"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
-                                    required
+                                    value={data.title}
+                                    onChange={handleTitle}
                                 />
                             </label>
                             <label className="form-label w-100">
                                 <span className="small">Descripción</span>
                                 <JoditEditor
                                     ref={editor}
-                                    value={desc}
+                                    value={data.desc}
                                     config={config}
                                     onChange={handleDesc}
-                                    required
                                 />
                             </label>
                             <label className="form-label w-100">
@@ -78,25 +86,9 @@ function CreatePost() {
                                 <input
                                     type="text"
                                     className="form-control mt-1"
-                                    value={photo}
-                                    onChange={(e) => setPhoto(e.target.value)}
+                                    value={data.photo}
+                                    onChange={handlePhoto}
                                 />
-                            </label>
-                            <label className="form-label w-100 mt-3">
-                                <span className="small me-2">Seleccionar Categoria</span>
-                                <select
-                                    value={selectedCategory}
-                                    onChange={(e) => setSelectedCategory(e.target.value)}
-                                >
-                                    <option value="" disabled>
-                                        Seleccione una categoría
-                                    </option>
-                                    {categories.categorias?.map((cat) => (
-                                        <option value={cat._id} key={cat._id}>
-                                            {cat.name}
-                                        </option>
-                                    ))}
-                                </select>
                             </label>
                             {
                                 !loading &&
@@ -110,7 +102,6 @@ function CreatePost() {
                                     Creando Post
                                 </button>
                             }
-
                         </div>
                     </div>
                 </form>
@@ -119,4 +110,4 @@ function CreatePost() {
     )
 }
 
-export default CreatePost
+export default EditPost

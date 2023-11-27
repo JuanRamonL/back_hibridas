@@ -15,13 +15,10 @@ function Header() {
         })
         .then(() => {
             localStorage.removeItem('token')
+            localStorage.removeItem('rol')
             navigate('/iniciar-sesion')
         })
     }
-
-    /* useEffect(() => {
-        fetch()
-    }) */
 
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-2">
