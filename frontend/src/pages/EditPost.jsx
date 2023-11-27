@@ -11,7 +11,6 @@ function EditPost() {
         desc: "",
         photo: ""
     });
-    const [loading, setLoading] = useState(true)
 
     const handleTitle = (e) => {
         setData({ ...data, title: e.target.value });
@@ -48,7 +47,6 @@ function EditPost() {
         }).then(() => {
             console.log("Se editó el nuevo post")
             console.log(data);
-            setLoading(false)
             navigate("/")
         })
     }
