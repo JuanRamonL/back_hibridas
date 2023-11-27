@@ -33,7 +33,6 @@ function EditPost() {
     }
 
     useEffect(() => {
-        setLoading(true)
         fetch(`http://localhost:2023/Api/v1/entradas/${id}`)
             .then(response => response.json())
             .then(data => setData(data))
@@ -41,8 +40,6 @@ function EditPost() {
 
     const handleSubmitEdit = (e) => {
         e.preventDefault()
-
-        setLoading(true)
 
         fetch(`http://localhost:2023/Api/v1/entradas/${id}/actualizar`, {
             method: "PUT",
@@ -90,18 +87,9 @@ function EditPost() {
                                     onChange={handlePhoto}
                                 />
                             </label>
-                            {
-                                !loading &&
-                                <button type="submit" className="btn btn-primary mt-3 py-2 w-100">
-                                    Crear Post
-                                </button>
-                            }
-                            {
-                                loading &&
-                                <button type="submit" className="btn btn-primary mt-3 py-2 w-100">
-                                    Creando Post
-                                </button>
-                            }
+                            <button type="submit" className="btn btn-primary mt-3 mb-5 py-2 w-100">
+                                Editar Post
+                            </button>
                         </div>
                     </div>
                 </form>

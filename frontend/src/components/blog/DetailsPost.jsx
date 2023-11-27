@@ -82,28 +82,30 @@ function DetailsPost() {
                         </div>
                     </div>
                 </div>
-                {getRol !== 'user' && getRol === 'admin' ? (
-                    <>
-                        <form onSubmit={handleDeletePost} className='d-flex justify-content-center'>
-                            <button type='submit' className='btn btn-danger d-flex py-2'>
-                                <i className='bx bx-trash me-2 fs-5'></i>
-                                Eliminar Post
+                <div className='d-flex justify-content-center gap-3'>
+                    {getRol !== 'user' && getRol === 'admin' ? (
+                        <>
+                            <form onSubmit={handleDeletePost} className='d-flex justify-content-center'>
+                                <button type='submit' className='btn btn-danger d-flex py-2'>
+                                    <i className='bx bx-trash me-2 fs-5'></i>
+                                    Eliminar Post
+                                </button>
+                            </form>
+                        </>
+                    ) : (
+                        ''
+                    )}
+                    {getRol !== 'user' ? (
+                        <form onSubmit={handleEditPost} className='d-flex justify-content-center'>
+                            <button type='submit' className='btn btn-warning d-flex py-2'>
+                                <i className='bx bx-edit me-2 fs-5'></i>
+                                Editar Post
                             </button>
                         </form>
-                    </>
-                ) : (
-                    ''
-                )}
-                {getRol !== 'user' ? (
-                    <form onSubmit={handleEditPost} className='d-flex justify-content-center'>
-                        <button type='submit' className='btn btn-warning d-flex py-2'>
-                            <i className='bx bx-edit me-2 fs-5'></i>
-                            Editar Post
-                        </button>
-                    </form>
-                ) : (
-                    ''
-                )}
+                    ) : (
+                        ''
+                    )}
+                </div>
             </div>
         </>
     );
