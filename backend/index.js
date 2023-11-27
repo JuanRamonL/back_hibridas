@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 import './database/mongoBD.js';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/autenticacion_route.js'; // Importar las rutas de autenticación
@@ -8,6 +9,7 @@ import categoriasRoutes from './routes/categorias_routes.js'; // Importar las ru
 
 const app = express();
 
+app.use(cors())
 app.use(express.static('public')); 
 app.use(express.json());
 app.use(cookieParser());

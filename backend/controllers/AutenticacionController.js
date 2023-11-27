@@ -4,13 +4,13 @@ import { NuevotokenUser, tokengenerate } from '../utils/tokengenerate.js';
 import { nuevoSecret } from '../utils/tokengenerate.js';
 
 export const register = async(req, res) => {
-    const {username, email, password, rol  } = req.body;
+    const { username, email, password, rol } = req.body;
     try{
         const user = new Usuarios({
             username,
             email, 
             password,
-            rol,
+            rol
         });
         await user.save();
 
@@ -42,6 +42,8 @@ export const login =  async(req, res) => {
         
         let user = await Usuarios.findOne({username});
 
+        let rol = user.rol
+
         if(!user){
             return res.status(403).json({
                 Estado: "ERROR",
@@ -60,7 +62,7 @@ export const login =  async(req, res) => {
         
         NuevotokenUser(user._id, res); //Utilizamos la nuevav cookie para el refreshToken
 
-        return res.json({token, expiresIn});
+        return res.json({token, expiresIn, rol});
 
     }catch(error){
         console.log(error);
