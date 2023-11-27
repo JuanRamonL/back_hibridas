@@ -8,12 +8,15 @@ function CreatePost() {
     const [desc, setDesc] = useState("")
     const [photo, setPhoto] = useState("")
     const [loading, setLoading] = useState(false)
-    const [message, setMessage] = useState("")
     const navigate = useNavigate()
 
     const editor = useRef(null)
     const config = {
         placeholder: "Descripción del post"
+    }
+
+    const handleDesc = (e) => {
+        setDesc(e)
     }
 
     const handleSubmit = (e) => {
@@ -30,10 +33,7 @@ function CreatePost() {
         }).then(() => {
             console.log("Se agrego el nuevo post")
             setLoading(false)
-            setMessage("Se agrego un nuevo post")
             navigate("/")
-        }).catch(() => {
-            setMessage("No se pudo crear el post")
         })
     }
 
@@ -67,7 +67,7 @@ function CreatePost() {
                                     ref={editor}
                                     value={desc}
                                     config={config}
-                                    onChange={newContent => setDesc(newContent)}
+                                    onChange={handleDesc}
                                     required
                                 />
                             </label>
@@ -93,13 +93,6 @@ function CreatePost() {
                                 </button>
                             }
 
-                            <div className="text-center mt-3 mb-5">
-                                {
-                                    message
-                                        ? <p className="alert alert-danger">{message}</p>
-                                        : null
-                                }
-                            </div>
                         </div>
                     </div>
                 </form>

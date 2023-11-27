@@ -4,13 +4,12 @@ import { NuevotokenUser, tokengenerate } from '../utils/tokengenerate.js';
 import { nuevoSecret } from '../utils/tokengenerate.js';
 
 export const register = async(req, res) => {
-    const {username, email, password, rol  } = req.body;
+    const { username, email, password } = req.body;
     try{
         const user = new Usuarios({
             username,
             email, 
             password,
-            rol,
         });
         await user.save();
 
