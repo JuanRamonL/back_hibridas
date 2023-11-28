@@ -9,7 +9,7 @@ function EditPost() {
     const [data, setData] = useState({
         title: "",
         desc: "",
-        photo: ""
+        photo: "",
     });
 
     const handleTitle = (e) => {
@@ -21,7 +21,7 @@ function EditPost() {
     };
 
     const handlePhoto = (e) => {
-        setData({ ...data, photo: e.target.value });
+        setData({ ...data, photo: e.target.value })
     };
 
     const navigate = useNavigate()
@@ -45,7 +45,7 @@ function EditPost() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
         }).then(() => {
-            console.log("Se editó el nuevo post")
+            console.log("Se editó el post")
             console.log(data);
             navigate("/")
         })
@@ -54,7 +54,7 @@ function EditPost() {
     return (
         <>
             <div className="container create-post-section">
-                <h1 className="text-center py-5 fw-bold">Crear Post</h1>
+                <h1 className="text-center py-5 fw-bold">Editar Post</h1>
                 <form action="#" onSubmit={handleSubmitEdit}>
                     <div className="row justify-content-center">
                         <div className="col-12 col-lg-9">
