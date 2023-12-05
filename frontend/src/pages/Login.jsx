@@ -19,15 +19,13 @@ function Login() {
             body: JSON.stringify({ username, password })
         })
 
-        console.log(response)
-
         const res = await response.json()
-        
         console.log(res)
 
         if (response.ok) {
-            localStorage.setItem('token', res.token)
+            localStorage.setItem('_id', res.userid)
             localStorage.setItem('rol', res.rol)
+            localStorage.setItem('token', res.token)
             navigate('/')
         } else if(!response.ok && password == '' ) {
             alert(res.errors[0].msg)

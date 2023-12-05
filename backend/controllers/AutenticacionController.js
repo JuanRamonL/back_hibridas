@@ -43,6 +43,7 @@ export const login =  async(req, res) => {
         let user = await Usuarios.findOne({username});
 
         let rol = user.rol
+        let userid = user._id
 
         if(!user){
             return res.status(403).json({
@@ -62,7 +63,7 @@ export const login =  async(req, res) => {
         
         NuevotokenUser(user._id, res); //Utilizamos la nuevav cookie para el refreshToken
 
-        return res.json({token, expiresIn, rol});
+        return res.json({token, expiresIn, rol, userid});
 
     }catch(error){
         console.log(error);

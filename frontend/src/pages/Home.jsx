@@ -28,7 +28,7 @@ function Home() {
                             : ''
                         }
                     </div>
-                    <div className="row g-4">
+                    <div className="row g-3">
                         <Posts />
                     </div>
                 </div>

@@ -12,13 +12,15 @@ function CreatePost() {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
-    const editor = useRef(null)
-    const config = {
-        placeholder: "Descripción del post"
-    }
+    const autor = localStorage.getItem('_id')
 
     const handleDesc = (e) => {
         setDesc(e)
+    }
+
+    const editor = useRef(null)
+    const config = {
+        placeholder: "Descripción del post"
     }
 
     useEffect(() => {
@@ -30,7 +32,13 @@ function CreatePost() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const newPost = { title, desc, photo, categories: selectedCategory }
+        const newPost = {
+            title,
+            desc,
+            photo,
+            categories: selectedCategory,
+            autor
+        }
 
         setLoading(true)
 
@@ -49,7 +57,7 @@ function CreatePost() {
     return (
         <>
             <div className="container create-post-section">
-                <h1 className="text-center py-5 fw-bold">Crear Post</h1>
+                <h1 className="text-center pt-4 fw-bold">Crear Post</h1>
                 <form action="#" onSubmit={handleSubmit} method="POST">
                     <div className="row justify-content-center">
                         <div className="col-12 col-lg-9">
@@ -60,7 +68,6 @@ function CreatePost() {
                                     className="form-control mt-1"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    required
                                 />
                             </label>
                             <label className="form-label w-100">
@@ -69,8 +76,7 @@ function CreatePost() {
                                     ref={editor}
                                     value={desc}
                                     config={config}
-                                    onChange={handleDesc}
-                                    required
+                                    onBlur={handleDesc}
                                 />
                             </label>
                             <label className="form-label w-100">
@@ -98,9 +104,18 @@ function CreatePost() {
                                     ))}
                                 </select>
                             </label>
+{/*                             <label className="form-label w-100">
+                                <span className="small">Autor</span>
+                                <input
+                                    type="text"
+                                    className="form-control mt-1"
+                                    value={author}
+                                    onChange={(e) => setAuthor(e.target.value)}
+                                />
+                            </label> */}
                             {
                                 !loading &&
-                                <button type="submit" className="btn btn-primary mt-3 py-2 w-100">
+                                <button type="submit" className="btn btn-primary mt-3 mb-5 py-2 w-100">
                                     Crear Post
                                 </button>
                             }

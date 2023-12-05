@@ -16,6 +16,8 @@ function Header() {
         .then(() => {
             localStorage.removeItem('token')
             localStorage.removeItem('rol')
+            localStorage.removeItem('username')
+            localStorage.removeItem('_id')
             navigate('/iniciar-sesion')
         })
     }
