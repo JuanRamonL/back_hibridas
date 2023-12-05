@@ -16,8 +16,8 @@ function EditPost() {
         setData({ ...data, title: e.target.value });
     };
 
-    const handleDesc = (value) => {
-        setData({ ...data, desc: value });
+    const handleDesc = (e) => {
+        setData({ ...data, desc: e });
     };
 
     const handlePhoto = (e) => {
@@ -46,7 +46,6 @@ function EditPost() {
             body: JSON.stringify(data)
         }).then(() => {
             console.log("Se editó el post")
-            console.log(data);
             navigate("/")
         })
     }
@@ -73,7 +72,7 @@ function EditPost() {
                                     ref={editor}
                                     value={data.desc}
                                     config={config}
-                                    onChange={handleDesc}
+                                    onBlur={handleDesc}
                                 />
                             </label>
                             <label className="form-label w-100">

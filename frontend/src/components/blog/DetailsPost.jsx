@@ -1,12 +1,12 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+//import InfiniteScroll from 'react-infinite-scroll-component'
 import parse from 'html-react-parser';
 
 function DetailsPost() {
     const { id } = useParams();
 
     const [postData, setPostData] = useState({});
-    const [categoryData, setCategoryData] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -22,19 +22,6 @@ function DetailsPost() {
             .finally(() => setLoading(false));
     }, [id]);
 
-    useEffect(() => {
-        if (postData.categories && postData.categories.length > 0) {
-            // Assuming the first category
-            const categoryId = postData.categories[0]?.['_id']; // Acceder al primer elemento del array
-            fetch(`http://localhost:2023/Api/v1/categorias/${categoryId}`)
-                .then(response => response.json())
-                .then(data => setCategoryData(data))
-                .catch(error => setError(error));
-        }
-    }, [postData]);
-
-    console.log(postData)
-
     const handleDeletePost = (e) => {
         e.preventDefault();
 
@@ -45,18 +32,6 @@ function DetailsPost() {
             .catch(err => err);
 
         navigate('/');
-    };
-
-    const handleEditPost = (e) => {
-        e.preventDefault();
-
-        fetch(`http://localhost:2023/Api/v1/entradas/${id}/actualizar`, {
-            method: 'PUT',
-        })
-            .then(res => res.json())
-            .catch(err => err);
-
-        navigate(`/post/${id}/edit`);
     };
 
     return (
@@ -72,12 +47,11 @@ function DetailsPost() {
                     <div className='col-12 col-lg-7' key={postData._id}>
                         <img className='img-fluid w-100' src={postData.photo || '/no-image.jpg'} alt='' />
                         <div className='py-4'>
-                            <p className='d-flex mb-2 text-primary fw-medium '>
-                                <i className='bx bxs-calendar me-2 fs-5'></i>
-                                <span>{postData.createdAt?.slice(0, 10)}</span>
-                            </p>
+                            <div className='d-flex align-items-center justify-content-between'>
+                                <span className='fw-bold text-primary'>{postData.categories?.name}</span>
+                                <span className='fw-bold text-primary'>{postData.createdAt?.slice(0, 10)}</span>
+                            </div>
                             <h3 className='fw-bold mb-4 mt-3'>{postData.title}</h3>
-                            <h3 className='fw-bold mb-4 mt-3'>{categoryData.name}</h3>
                             <div>{parse(`${postData.desc}`)}</div>
                         </div>
                     </div>
@@ -96,12 +70,12 @@ function DetailsPost() {
                         ''
                     )}
                     {getRol !== 'user' ? (
-                        <form onSubmit={handleEditPost} className='d-flex justify-content-center'>
-                            <button type='submit' className='btn btn-warning d-flex py-2'>
+                        <div className='d-flex justify-content-center'>
+                            <Link to={`/post/${id}/edit`} type='submit' className='btn btn-warning d-flex py-2'>
                                 <i className='bx bx-edit me-2 fs-5'></i>
                                 Editar Post
-                            </button>
-                        </form>
+                            </Link>
+                        </div>
                     ) : (
                         ''
                     )}

@@ -72,8 +72,8 @@ export const eliminarEntrada = async (req, res) => {
 export const editarEntrada = async (req, res) => {  
     try {
         const { id } = req.params;
-        const { title, desc } = req.body;
-        const post = await Post.findByIdAndUpdate(id, {title, desc});
+        const { title, desc, photo } = req.body;
+        const post = await Post.findByIdAndUpdate(id, {title, desc, photo});
 
         await post.save();
 
