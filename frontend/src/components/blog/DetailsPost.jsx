@@ -1,6 +1,5 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-//import InfiniteScroll from 'react-infinite-scroll-component'
 import parse from 'html-react-parser';
 
 function DetailsPost() {
@@ -47,6 +46,10 @@ function DetailsPost() {
                     <div className='col-12 col-lg-7' key={postData._id}>
                         <img className='img-fluid w-100' src={postData.photo || '/no-image.jpg'} alt='' />
                         <div className='py-4'>
+                            <div className='d-flex align-items-center mb-3 gap-2'>
+                                <img src="/no-profile-image.png" className='img-fluid ' width={48} alt="" />
+                                <span className='fw-medium fst-italic'>{postData.autor?.username}</span>
+                            </div>
                             <div className='d-flex align-items-center justify-content-between'>
                                 <span className='fw-bold text-primary'>{postData.categories?.name}</span>
                                 <span className='fw-bold text-primary'>{postData.createdAt?.slice(0, 10)}</span>

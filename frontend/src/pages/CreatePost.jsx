@@ -12,6 +12,8 @@ function CreatePost() {
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
+    const autor = localStorage.getItem('_id')
+
     const handleDesc = (e) => {
         setDesc(e)
     }
@@ -30,7 +32,13 @@ function CreatePost() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        const newPost = { title, desc, photo, categories: selectedCategory }
+        const newPost = {
+            title,
+            desc,
+            photo,
+            categories: selectedCategory,
+            autor
+        }
 
         setLoading(true)
 
@@ -60,7 +68,6 @@ function CreatePost() {
                                     className="form-control mt-1"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    required
                                 />
                             </label>
                             <label className="form-label w-100">
@@ -97,6 +104,15 @@ function CreatePost() {
                                     ))}
                                 </select>
                             </label>
+{/*                             <label className="form-label w-100">
+                                <span className="small">Autor</span>
+                                <input
+                                    type="text"
+                                    className="form-control mt-1"
+                                    value={author}
+                                    onChange={(e) => setAuthor(e.target.value)}
+                                />
+                            </label> */}
                             {
                                 !loading &&
                                 <button type="submit" className="btn btn-primary mt-3 mb-5 py-2 w-100">

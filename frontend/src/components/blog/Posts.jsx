@@ -1,12 +1,23 @@
 import { Link } from "react-router-dom"
-import { useFetch } from "../../useFetch"
 import parse from "html-react-parser"
+import { useEffect, useState } from "react"
 
 function Posts() {
 
-    const { data, loading, error } = useFetch(
-        "http://localhost:2023/Api/v1/entradas"
-    )
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        setLoading(true)
+        fetch("http://localhost:2023/Api/v1/entradas")
+            .then(response => response.json())
+            .then(data => setData(data.posts))
+            .catch(error => setError(error))
+            .finally(() => setLoading(false))
+    }, [])
+
+    console.log(data)
 
     return (
         <>
@@ -18,7 +29,7 @@ function Posts() {
                     </span>
                 </div>
             }
-            {data?.posts.map((post) =>
+            {data?.map((post) =>
                 <div className="col-12 col-md-6 col-lg-4" key={post._id}>
                     <img className="img-fluid" src={post.photo || "/no-image.jpg"} alt="" />
                     <div className="py-3">
