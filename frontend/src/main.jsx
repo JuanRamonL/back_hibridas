@@ -2,16 +2,23 @@ import './index.css'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom'
 import App from './App.jsx'
-
 import Home from './pages/Home'
 import DetailsPost from './components/blog/DetailsPost'
 import CreatePost from './pages/CreatePost'
 import EditPost from './pages/EditPost'
+import DeletePost from './pages/DeletePost'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import NotFound from './pages/NotFound.jsx'
+import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute'
-import Anonymous from './components/AnonymousRoute.jsx'
+import Anonymous from './components/AnonymousRoute'
+import RoleBasedRoute from './components/RoleBasedRoute'
+import Profile from './pages/Profile'
+import EditProfile from './pages/EditProfile'
+import DashboardPosts from './pages/DashboardPosts.jsx'
+import DashboardUsers from './pages/DashboardUsers.jsx'
+import EditUser from './pages/EditUser.jsx'
+
 
 const router = createBrowserRouter([
     {
@@ -28,17 +35,59 @@ const router = createBrowserRouter([
                         element: <Home/>,
                     },
                     {
+                        path: 'perfil/:id',
+                        element: <Profile/>,
+                    },
+                    {
+                        path: 'perfil/:id/editar',
+                        element: <EditProfile/>
+                    },
+                    {
                         path: 'post/:id',
                         element: <DetailsPost/>,
                     },
                     {
-                        path: 'post/create',
-                        element: <CreatePost/>
+                        path: 'post',
+                        element: <RoleBasedRoute><Outlet/></RoleBasedRoute>,
+                        children: [
+                            {
+                                path: 'crear',
+                                element: <CreatePost/>
+                            },
+                            {
+                                path: ':id/editar',
+                                element: <EditPost/>
+                            },
+                            {
+                                path: ':id/eliminar',
+                                element: <DeletePost/>
+                            }
+                        ]
                     },
                     {
-                        path: 'post/:id/edit',
-                        element: <EditPost/>
+                        path: 'dashboard',
+                        element: <RoleBasedRoute><Outlet/></RoleBasedRoute>,
+                        children: [
+                            {
+                                path: 'posteos',
+                                element: <DashboardPosts/>
+                            },
+                            {
+                                path: 'usuarios',
+                                element: <DashboardUsers/>
+                            }
+                        ]
                     },
+                    {
+                        path: 'usuario/:id',
+                        element: <RoleBasedRoute><Outlet/></RoleBasedRoute>,
+                        children: [
+                            {
+                                path: 'editar',
+                                element: <EditUser/>
+                            }
+                        ]
+                    }
                 ]
             },
             {
@@ -62,7 +111,7 @@ const router = createBrowserRouter([
                 ]
             }
         ]
-    },
+    }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

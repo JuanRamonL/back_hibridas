@@ -28,6 +28,24 @@ export const entradasPorId = async (req, res) => {
     }
 }
 
+export const entradasPorAutor = async (req, res) => {
+    try {
+        
+        const { idAutor } = req.params
+        
+        const postAutor = await Post.find({ autor: idAutor }).populate({ path: "autor", select: "username" }).populate({ path: "categories", select: "name" })
+
+        if(!postAutor) {
+            return res.status(404).json({ Estado: "No se pudieron encontrar las entradas por el autor" })
+        }
+
+        res.status(200).json(postAutor)
+
+    } catch (error) {
+        res.status(500).json({Estado: "Error al buscar las entrada por Autor", error});
+    }
+}
+
 export const nuevaEntrada = async (req, res) => {
     try {
         const { title, desc, photo, autor, categories } = req.body;

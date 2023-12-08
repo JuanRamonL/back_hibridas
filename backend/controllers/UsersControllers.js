@@ -17,8 +17,21 @@ export const usuariosPorId = async (req, res) => {
     });
 };
 
-export const modificar = (req, res) => {
-    res.json({Estado: "OK"});
+export const modificar = async (req, res) => {
+    try {
+
+        const { id } = req.params
+        
+        const { username, email, rol, profilePic } = req.body
+
+        const user = await Usuarios.findByIdAndUpdate(id, { username, email, rol, profilePic })
+
+        await user.save()
+        
+        res.status(200).json({Estado: "Usuario modificado exitosamente"});
+    } catch (error) {
+        res.status(500).json({ Estado: "No se pudo modificar el usuario" })
+    }
 };
 
 export const eliminar = (req, res) => {

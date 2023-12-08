@@ -1,9 +1,6 @@
-import { Link } from "react-router-dom"
 import Posts from "../components/blog/Posts"
 
 function Home() {
-
-    const getRol = localStorage.getItem('rol')
 
     return (
         <>
@@ -17,17 +14,7 @@ function Home() {
                     </div>
                 </div>
                 <div className="mb-5 pb-5">
-                    <div className="d-flex align-items-center justify-content-between mb-4">
-                        <h2 className="fw-bold">Posteos recientes</h2>
-                        {
-                            getRol !== 'user' ?
-                            <Link to="/post/create" className="btn btn-primary btn-sm d-flex align-items-center gap-2">
-                                <i className='bx bx-plus fs-5'></i>
-                                Crear Post
-                            </Link>
-                            : ''
-                        }
-                    </div>
+                    <h2 className="fw-bold mb-4">Posteos recientes</h2>
                     <div className="row g-3">
                         <Posts />
                     </div>
