@@ -7,6 +7,7 @@ function Register() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rol] = useState('user')
+    const [errors, setErrors] = useState('')
 
     const navigate = useNavigate()
 
@@ -27,13 +28,17 @@ function Register() {
         if (response.ok) {
             navigate('/iniciar-sesion')
         } else if(!response.ok && password == '' ) {
-            alert(res.errors[0].msg)
+            //alert(res.errors[0].msg)
+            setErrors(res.errors[0].msg)
         } else if(!response.ok && username == '' ) {
-            alert(res.errors[0].msg)
+            //alert(res.errors[0].msg)
+            setErrors(res.errors[0].msg)
         } else if(!response.ok && email == '' ) {
-            alert(res.errors[0].msg)
+            //alert(res.errors[0].msg)
+            setErrors(res.errors[0].msg)
         } else if(response.status == 400 ) {
-            alert(res.Mensaje)
+            //alert(res.Mensaje)
+            setErrors(res.Mensaje)
         }
     }
 
@@ -44,13 +49,19 @@ function Register() {
             <form onSubmit={handleSubmit}>
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-6 col-lg-4">
+                        {
+                            errors && 
+                            <div className="alert alert-danger" role="alert">
+                                { errors }
+                            </div>
+                        }
                         <label className="form-label w-100">
                             <span className="small">Nombre de usuario</span>
                             <input
                                 type="text"
                                 className="form-control mt-1"
                                 onChange={e => setUsername(e.target.value)}
-                            />
+                                />
                         </label>
                         <label className="form-label w-100">
                             <span className="small">Correo electrónico</span>
@@ -58,7 +69,7 @@ function Register() {
                                 type="email"
                                 className="form-control mt-1"
                                 onChange={e => setEmail(e.target.value)}
-                            />
+                                />
                         </label>
                         <label className="form-label w-100">
                             <span className="small">Contraseña</span>
@@ -66,9 +77,9 @@ function Register() {
                                 type="password"
                                 className="form-control mt-1"
                                 onChange={e => setPassword(e.target.value)}
-                            />
+                                />
                         </label>
-                        <button type="submit" className="btn btn-primary mt-3 py-2 w-100">
+                        <button type="submit" className="btn btn-primary mt-3 mb-4 py-2 w-100">
                             Unirse
                         </button>
                     </div>

@@ -6,7 +6,9 @@ function Header() {
 
     const navigate = useNavigate()
     const getToken = localStorage.getItem('token')
-    
+    const getRol = localStorage.getItem('rol')
+    const getId = localStorage.getItem('_id')
+
     const handleLogOut = (e) => {
         e.preventDefault()
 
@@ -33,7 +35,49 @@ function Header() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav gap-3 py-4 p-lg-0 text-center ms-auto">
+                    <ul className="navbar-nav gap-4 py-4 p-lg-0 text-center ms-auto align-items-center">
+                        {
+                            getToken && getRol === 'admin' ?
+                            <>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Dashboard
+                                    </a>
+                                    <ul className="dropdown-menu text-center rounded-0">
+                                        <li>
+                                            <Link to="/dashboard/posteos" className="text-primary hover-link">
+                                                Posteos
+                                            </Link>
+                                        </li>
+                                        <li><hr className="dropdown-divider"/></li>
+                                        <li>
+                                            <Link to="/dashboard/usuarios" className="text-primary hover-link">
+                                                Usuarios
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </>
+                            : ''
+                        }
+                        {
+                            getRol === 'editor' ?
+                            <>
+                                <li className="nav-item dropdown">
+                                    <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Dropdown
+                                    </a>
+                                    <ul className="dropdown-menu text-center rounded-0">
+                                        <li>
+                                            <Link to="/dashboard/posteos" className="text-primary hover-link">
+                                                Posteos
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </>
+                            : ''
+                        }
                         {
                             !getToken ?
                                 <>
@@ -50,6 +94,11 @@ function Header() {
                                 </>
                             : 
                                 <>
+                                    <li className="nav-item mt-1">
+                                        <Link to={`/perfil/${getId}`} className="text-primary hover-link">
+                                            Mi Perfil
+                                        </Link>
+                                    </li>
                                     <li className="nav-item">
                                         <form onSubmit={handleLogOut}>
                                             <button type="submit" className="btn btn-primary btn-sm">
@@ -58,7 +107,6 @@ function Header() {
                                         </form>
                                     </li>
                                 </>
-                            
                         }
                     </ul>
                 </div>

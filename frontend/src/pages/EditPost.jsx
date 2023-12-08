@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import JoditEditor from 'jodit-react'
 
 function EditPost() {
@@ -46,7 +46,7 @@ function EditPost() {
             body: JSON.stringify(data)
         }).then(() => {
             console.log("Se editó el post")
-            navigate("/")
+            navigate("/dashboard/posteos")
         })
     }
 
@@ -84,9 +84,12 @@ function EditPost() {
                                     onChange={handlePhoto}
                                 />
                             </label>
-                            <button type="submit" className="btn btn-primary mt-3 mb-5 py-2 w-100">
+                            <button type="submit" className="btn btn-primary mt-3 mb-3 py-2 w-100">
                                 Editar Post
                             </button>
+                            <Link to={'/dashboard/posteos'} className='btn btn-warning py-2 w-100 mb-5'>
+                                Cancelar
+                            </Link>
                         </div>
                     </div>
                 </form>

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import JoditEditor from 'jodit-react'
 
 function CreatePost() {
@@ -50,14 +50,14 @@ function CreatePost() {
             console.log("Se agrego el nuevo post")
             setLoading(false)
             console.log(newPost);
-            navigate("/")
+            navigate("/dashboard/posteos")
         })
     }
 
     return (
         <>
             <div className="container create-post-section">
-                <h1 className="text-center pt-4 fw-bold">Crear Post</h1>
+                <h1 className="text-center py-5 fw-bold">Crear Post</h1>
                 <form action="#" onSubmit={handleSubmit} method="POST">
                     <div className="row justify-content-center">
                         <div className="col-12 col-lg-9">
@@ -104,18 +104,9 @@ function CreatePost() {
                                     ))}
                                 </select>
                             </label>
-{/*                             <label className="form-label w-100">
-                                <span className="small">Autor</span>
-                                <input
-                                    type="text"
-                                    className="form-control mt-1"
-                                    value={author}
-                                    onChange={(e) => setAuthor(e.target.value)}
-                                />
-                            </label> */}
                             {
                                 !loading &&
-                                <button type="submit" className="btn btn-primary mt-3 mb-5 py-2 w-100">
+                                <button type="submit" className="btn btn-primary mt-3 mb-3 py-2 w-100">
                                     Crear Post
                                 </button>
                             }
@@ -125,7 +116,9 @@ function CreatePost() {
                                     Creando Post
                                 </button>
                             }
-
+                            <Link to={'/dashboard/posteos'} className='btn btn-warning py-2 w-100 mb-5'>
+                                Cancelar
+                            </Link>
                         </div>
                     </div>
                 </form>

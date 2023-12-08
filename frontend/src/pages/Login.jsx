@@ -5,6 +5,7 @@ function Login() {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState('')
 
     const navigate = useNavigate()
 
@@ -24,15 +25,19 @@ function Login() {
 
         if (response.ok) {
             localStorage.setItem('_id', res.userid)
+            localStorage.setItem('username', res.username)
             localStorage.setItem('rol', res.rol)
             localStorage.setItem('token', res.token)
             navigate('/')
         } else if(!response.ok && password == '' ) {
-            alert(res.errors[0].msg)
+            //alert(res.errors[0].msg)
+            setErrors(res.errors[0].msg)
         } else if(!response.ok && username == '' ) {
-            alert(res.errors[0].msg)
+            //alert(res.errors[0].msg)
+            setErrors(res.errors[0].msg)
         } else if(!response.ok && username !== res.token && password !== res.token ) {
-            alert(res.Mensaje)
+            //alert(res.Mensaje)
+            setErrors(res.Mensaje)
         }
     }
 
@@ -42,6 +47,13 @@ function Login() {
             <form onSubmit={handleSubmit}>
                 <div className="row justify-content-center">
                     <div className="col-12 col-md-6 col-lg-4">
+                        {
+                            errors && 
+                            <div className="alert alert-danger d-flex align-items-center gap-2" role="alert">
+                                <i className='bx bx-error-circle'></i>
+                                { errors }
+                            </div>
+                        }
                         <label className="form-label w-100">
                             <span className="small">Nombre de usuario</span>
                             <input

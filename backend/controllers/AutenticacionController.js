@@ -63,7 +63,7 @@ export const login =  async(req, res) => {
         
         NuevotokenUser(user._id, res); //Utilizamos la nuevav cookie para el refreshToken
 
-        return res.json({token, expiresIn, rol, userid});
+        return res.json({token, expiresIn, rol, userid, username});
 
     }catch(error){
         console.log(error);
