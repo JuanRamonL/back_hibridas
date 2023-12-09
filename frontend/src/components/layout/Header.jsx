@@ -38,46 +38,43 @@ function Header() {
                     <ul className="navbar-nav gap-4 py-4 p-lg-0 text-center ms-auto align-items-center">
                         {
                             getToken && getRol === 'admin' ?
-                            <>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dashboard
-                                    </a>
-                                    <ul className="dropdown-menu text-center rounded-0">
-                                        <li>
-                                            <Link to="/dashboard/posteos" className="text-primary hover-link">
-                                                Posteos
-                                            </Link>
-                                        </li>
-                                        <li><hr className="dropdown-divider"/></li>
-                                        <li>
-                                            <Link to="/dashboard/usuarios" className="text-primary hover-link">
-                                                Usuarios
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </>
-                            : ''
+                                <>
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Dashboard
+                                        </a>
+                                        <ul className="dropdown-menu text-center rounded-0">
+                                            <li>
+                                                <Link to="/dashboard/posteos" className="text-primary hover-link">
+                                                    Posteos
+                                                </Link>
+                                            </li>
+                                            <li><hr className="dropdown-divider"/></li>
+                                            <li>
+                                                <Link to="/dashboard/usuarios" className="text-primary hover-link">
+                                                    Usuarios
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </>
+                            : 
+                                <>
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Dashboard
+                                        </a>
+                                        <ul className="dropdown-menu text-center rounded-0">
+                                            <li>
+                                                <Link to="/dashboard/posteos" className="text-primary hover-link">
+                                                    Posteos
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </>
                         }
-                        {
-                            getRol === 'editor' ?
-                            <>
-                                <li className="nav-item dropdown">
-                                    <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Dropdown
-                                    </a>
-                                    <ul className="dropdown-menu text-center rounded-0">
-                                        <li>
-                                            <Link to="/dashboard/posteos" className="text-primary hover-link">
-                                                Posteos
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </>
-                            : ''
-                        }
+
                         {
                             !getToken ?
                                 <>
