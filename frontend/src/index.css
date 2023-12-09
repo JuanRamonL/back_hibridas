@@ -6,6 +6,7 @@
 }
 
 html {
+    position: relative;
     scroll-behavior: smooth;
     scroll-padding-top: 56px;
 }
@@ -85,4 +86,18 @@ textarea {
 
 .hover-link:hover {
     text-decoration: underline;
+}
+
+
+.infinite-scroll-container {
+    margin: auto;
+    margin-top: 5em;
+    height: 35em;
+    width: 50em;
+    overflow: auto;
+}
+
+.table-pagination-image {
+    width: 100px;
+    height: 100px;
 }

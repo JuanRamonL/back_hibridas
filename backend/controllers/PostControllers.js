@@ -3,11 +3,36 @@ import {Post} from '../models/Post.js';
 
 
 export const entradas = async (req, res) => {
-    const posts = await Post.find().populate({ path: "autor", select: "username" }).populate({ path: "categories", select: "name" });
-    res.json({
-        seccess: true,
-        posts
-    });
+    
+    const limit = parseInt(req.query.limit)
+    const page = parseInt(req.query.page)
+    let query = {}
+    
+    try {
+
+        const posts = await Post.find(query)
+            .populate({ path: "autor", select: "username" })
+            .populate({ path: "categories", select: "name" })
+            .sort({ updatedAt: -1 })
+            .skip(page * limit)
+            .limit(limit)
+            .exec()
+
+        const count = await Post.countDocuments()
+
+        res.json({
+            posts,
+            info: {
+                page: page,
+                pageSize: posts.length,
+                count
+            }
+        })
+
+    } catch (error) {
+        return res.status(500).json({ msg: error })
+    }
+
 };
 
 export const entradasPorId = async (req, res) => {
@@ -33,7 +58,10 @@ export const entradasPorAutor = async (req, res) => {
         
         const { idAutor } = req.params
         
-        const postAutor = await Post.find({ autor: idAutor }).populate({ path: "autor", select: "username" }).populate({ path: "categories", select: "name" })
+        const postAutor = await Post.find({ autor: idAutor })
+            .populate({ path: "autor", select: "username" })
+            .populate({ path: "categories", select: "name" })
+            .sort({ updatedAt: -1 })
 
         if(!postAutor) {
             return res.status(404).json({ Estado: "No se pudieron encontrar las entradas por el autor" })
