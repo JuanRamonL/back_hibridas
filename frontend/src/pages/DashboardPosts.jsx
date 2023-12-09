@@ -66,9 +66,21 @@ function DashboardPosts() {
                                         </div>
                                     </div>
                                     <div className='d-flex gap-4 justify-content-center justify-content-lg-start mt-4'>
-                                        {getRol !== 'user' && getRol === 'admin' && post.autor.username == getUser ? (
-                                            <>
 
+                                        {getRol !== 'user' && post.autor.username == getUser ? (
+                                            <>
+                                                <div className='d-flex justify-content-center'>
+                                                    <Link to={`/post/${post._id}`} className='btn btn-primary d-flex py-2'>
+                                                        <i className='bx bx-book me-2 fs-5'></i>
+                                                        Ver Post
+                                                    </Link>
+                                                </div>
+                                                <div className='d-flex justify-content-center'>
+                                                    <Link to={`/post/${post._id}/editar`} className='btn btn-warning d-flex py-2'>
+                                                        <i className='bx bx-edit me-2 fs-5'></i>
+                                                        Editar Post
+                                                    </Link>
+                                                </div>
                                                 <div className='d-flex justify-content-center'>
                                                     <Link to={`/post/${post._id}/eliminar`} className='btn btn-danger d-flex py-2'>
                                                         <i className='bx bx-trash me-2 fs-5'></i>
@@ -76,16 +88,6 @@ function DashboardPosts() {
                                                     </Link>
                                                 </div>
                                             </>
-                                        ) : (
-                                            ''
-                                        )}
-                                        {getRol !== 'user' && post.autor.username == getUser ? (
-                                            <div className='d-flex justify-content-center'>
-                                                <Link to={`/post/${post._id}/editar`} className='btn btn-warning d-flex py-2'>
-                                                    <i className='bx bx-edit me-2 fs-5'></i>
-                                                    Editar Post
-                                                </Link>
-                                            </div>
                                         ) : (
                                             ''
                                         )}
