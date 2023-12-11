@@ -15,7 +15,9 @@ function Home() {
                 </div>
                 <div className="mb-5">
                     <h2 className="fw-bold mb-4">Posteos recientes</h2>
-                    <Posts />
+                    <div className="row g-5">
+                        <Posts />
+                    </div>
                 </div>
             </div>
         </>
