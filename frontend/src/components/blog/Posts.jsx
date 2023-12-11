@@ -6,7 +6,6 @@ function Posts() {
 
     const [data, setData] = useState([])
     const [hasMore, setHasMore] = useState(true)
-    const [page, setPage] = useState(0)
     const [endMessage, setEndMessage] = useState('')
 
     const elementRef = useRef(null)
@@ -35,7 +34,7 @@ function Posts() {
 
     async function fetchMoreItems() {
         
-        const response = await fetch(`http://localhost:2023/Api/v1/entradas?limit=4&skip=${page + 3}&page=${page}`)
+        const response = await fetch(`http://localhost:2023/Api/v1/entradas`)
         
         const data = await response.json()
         console.log(data)
@@ -44,7 +43,6 @@ function Posts() {
             setEndMessage('No hay nada más para cargar 😢')
         } else {
             setData(prevData => [ ...prevData, ...data.posts ])
-            setPage(prevPage => prevPage + 1)
         }
 
     }
@@ -52,8 +50,8 @@ function Posts() {
     return (
         <>
             {
-                data.map(post => 
-                    <div className="col-12" key={post._id}>
+                data.map((post, index) => 
+                    <div className="col-12" key={index}>
                         <div className="row align-items-center">
                             <div className="col-12 col-lg-4">
                                 <img className="img-fluid w-100" src={post.photo || "/no-image.jpg"} alt="" />
