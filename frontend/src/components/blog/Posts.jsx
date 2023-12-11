@@ -1,55 +1,58 @@
 import { Link } from "react-router-dom"
 import parse from "html-react-parser"
-import { useState } from "react"
-import InfiniteScroll from 'react-infinite-scroll-component'
+import { useState, useEffect, useRef } from "react"
 
 function Posts() {
 
     const [data, setData] = useState([])
     const [hasMore, setHasMore] = useState(true)
+    const [page, setPage] = useState(0)
+    const [endMessage, setEndMessage] = useState('')
 
-    const fetchMoreData = () => {
-        if(data.length < 1) {
-            fetch("http://localhost:2023/Api/v1/entradas")
-            .then(response => response.json())
-            .then(data => setData(data.posts))
-        setTimeout(() => {
-            setData(data.concat(Array.from()))
-        }, 500);
-        } else {
+    const elementRef = useRef(null)
+
+    function onIntersection(entries) {
+        const firstEntry = entries[0]
+        if(firstEntry.isIntersecting && hasMore) {
+            fetchMoreItems()
+        }
+    }
+
+    useEffect(() => {
+
+        const observer = new IntersectionObserver(onIntersection)
+        if(observer && elementRef.current) {
+            observer.observe(elementRef.current)
+        }
+
+        return () => {
+            if(observer) {
+                observer.disconnect()
+            }
+        }
+
+    }, [data])
+
+    async function fetchMoreItems() {
+        
+        const response = await fetch(`http://localhost:2023/Api/v1/entradas?limit=4&skip=${page + 3}&page=${page}`)
+        
+        const data = await response.json()
+        console.log(data)
+        if(data.posts.length == 0) {
             setHasMore(false)
+            setEndMessage('No hay nada más para cargar 😢')
+        } else {
+            setData(prevData => [ ...prevData, ...data.posts ])
+            setPage(prevPage => prevPage + 1)
         }
 
     }
 
-    console.log(data)
-
     return (
         <>
-            {/* {error && <span>Mensaje de error</span>}
-            {loading &&
-                <div className="d-flex justify-content-center w-100 py-5">
-                    <span>
-                        <i className='bx bx-loader-alt bx-spin fs-1'></i>
-                    </span>
-                </div>
-            } */}
-
-            <InfiniteScroll
-                dataLength={data.length}
-                className="row g-5"
-                next={fetchMoreData}
-                hasMore={hasMore}
-                loader={
-                    <div className="d-flex justify-content-center w-100 py-5">
-                        <span>
-                            <i className='bx bx-loader-alt bx-spin fs-1'></i>
-                        </span>
-                    </div>
-                }
-                endMessage={<p className="text-center pt-4 fw-bold">No hay más resultados</p>}
-            >
-                {data.map((post) =>
+            {
+                data.map(post => 
                     <div className="col-12" key={post._id}>
                         <div className="row align-items-center">
                             <div className="col-12 col-lg-4">
@@ -72,8 +75,19 @@ function Posts() {
                             </div>
                         </div>
                     </div>
-                )}
-            </InfiniteScroll>
+                )
+            }
+            {hasMore ?
+                <div ref={elementRef} className="d-flex justify-content-center w-100 py-5">
+                    <span>
+                        <i className='bx bx-loader-alt bx-spin fs-1'></i>
+                    </span>
+                </div>
+                :
+                <div className="d-flex justify-content-center">
+                    <p>{ endMessage }</p>
+                </div>
+            }
         </>
     )
 }
