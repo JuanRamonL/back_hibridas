@@ -26,6 +26,9 @@ const usuariosSchema = new mongoose.Schema({
         required: false,
         default:"",
     },
+    verifyToken: {
+        type: String,
+    },
     }, { timestamps: true}
 );
 

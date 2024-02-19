@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 function Login() {
 
@@ -76,6 +77,9 @@ function Login() {
                     </div>
                 </div>
             </form>
+            <Link to="/recuperar-contraseña" >
+                <p className="text-center small text-secondary mt-5">¿Olvidaste tu contraseña?</p>
+            </Link>
         </div>
     )
 }

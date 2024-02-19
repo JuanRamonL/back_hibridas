@@ -2,6 +2,16 @@ import { Usuarios } from '../models/UsuariosSchema.js';
 import jwt from 'jsonwebtoken';
 import { NuevotokenUser, tokengenerate } from '../utils/tokengenerate.js';
 import { nuevoSecret } from '../utils/tokengenerate.js';
+import noemailer from 'nodemailer';
+
+//configuración de email
+const transporter = noemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'bloghibridas@gmail.com',
+        pass: 'BlogHibridas2023!',
+    }
+});
 
 export const register = async(req, res) => {
     const { username, email, password, rol } = req.body;
@@ -103,6 +113,8 @@ export const protectedRoute = async(req, res) => {
         });
     }
 }
+
+
 
 export const refreshToken = (req, res) => {
     try{

@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom"
 import JoditEditor from 'jodit-react'
 
+
+
 function CreatePost() {
 
     const [title, setTitle] = useState("")
@@ -52,6 +54,8 @@ function CreatePost() {
             console.log(newPost);
             navigate("/dashboard/posteos")
         })
+
+        
     }
 
     return (

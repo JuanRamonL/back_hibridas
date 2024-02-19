@@ -8,6 +8,7 @@ import CreatePost from './pages/CreatePost'
 import EditPost from './pages/EditPost'
 import DeletePost from './pages/DeletePost'
 import Login from './pages/Login'
+import ForgotPassword from './pages/ForgotPassword'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute'
@@ -18,6 +19,7 @@ import EditProfile from './pages/EditProfile'
 import DashboardPosts from './pages/DashboardPosts.jsx'
 import DashboardUsers from './pages/DashboardUsers.jsx'
 import EditUser from './pages/EditUser.jsx'
+import ResetPassword from './pages/ResetPassword.jsx'
 
 
 const router = createBrowserRouter([
@@ -107,6 +109,26 @@ const router = createBrowserRouter([
                     {
                         path: '',
                         element: <Register/>
+                    }
+                ]
+            },
+            {
+                path: 'recuperar-contraseña',
+                element: <Anonymous><Outlet/></Anonymous>,
+                children: [
+                    {
+                        path: '',
+                        element: <ForgotPassword/>
+                    }
+                ]
+            },
+            {
+                path: 'recuperar-clave/:id/:token',
+                element: <Anonymous><Outlet/></Anonymous>,
+                children: [
+                    {
+                        path: '',
+                        element: <ResetPassword/>
                     }
                 ]
             }
