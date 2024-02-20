@@ -56,7 +56,7 @@ function ForgotPassword() {
                         <div className="col-12 col-md-6 col-lg-4">
                             {
                                 message && (
-                                    <div className="alert alert-primary d-flex align-items-center gap-2" role="alert">
+                                    <div className="alert alert-success d-flex align-items-center gap-2" role="alert">
                                         <i className='bi bi-check-circle'></i>
                                         {message}
                                         <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
