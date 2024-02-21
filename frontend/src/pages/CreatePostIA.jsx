@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom"
 import JoditEditor from 'jodit-react'
+import { set } from "mongoose";
 
 
 
@@ -12,6 +13,7 @@ function CreatePostIA() {
     const [categories, setCategories] = useState('')
     const [selectedCategory, setSelectedCategory] = useState('');
     const [loading, setLoading] = useState(false)
+    const [prompt, setPrompt] = useState("")
     const navigate = useNavigate()
 
     const autor = localStorage.getItem('_id')
@@ -31,6 +33,50 @@ function CreatePostIA() {
             .then(data => setCategories(data))
     }, [])
 
+    const sendTopic = (e) => {
+        e.preventDefault()
+    
+        const newTopic = {
+            prompt
+        }
+    
+        setLoading(true)
+    
+    fetch('http://localhost:2023/Api/v1/consultasIa/chat', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newTopic)
+    })
+    .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            
+
+            // Expresión regular para buscar el primer h2
+            let regex = /<h2>(.*?)<\/h2>/;
+            let resultado = data.match(regex);
+
+            let textoSinH2 = data.replace(regex, ''); // Elimina las etiquetas <h2> y </h2>
+
+            setDesc(textoSinH2);
+
+            if (resultado) {
+                let textoExtraido = resultado[1]; // El grupo de captura (.*?) captura el texto dentro de las etiquetas <h2>
+                setTitle(textoExtraido);
+                console.log(textoExtraido); // Esto imprimirá: "Deliciosos patacones: una receta fácil y sabrosa"
+            } else {
+                console.log("No se encontraron etiquetas <h2> en el texto.");
+            }
+
+            setLoading(false);
+    })
+    .catch(error => {
+          console.error('Error al enviar el tema:', error);
+          setLoading(false);
+    });
+
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -42,7 +88,10 @@ function CreatePostIA() {
             autor
         }
 
+
+
         setLoading(true)
+
 
         fetch("http://localhost:2023/Api/v1/entradas", {
             method: "POST",
@@ -62,6 +111,34 @@ function CreatePostIA() {
         <>
             <div className="container create-post-section">
                 <h1 className="text-center py-5 fw-bold">Crear Post con IA</h1>
+                <form action="#" onSubmit={sendTopic} method="POST">
+                    <div className="row justify-content-center">
+                        <div className="col-12 col-lg-9">
+                            <label className="form-label w-100">
+                                <span className="small">Tema</span>
+                                <input
+                                    type="text"
+                                    className="form-control mt-1"
+                                    value={prompt}
+                                    onChange={(e) => setPrompt(e.target.value)}
+                                />
+                            </label>
+
+                            {
+                                !loading &&
+                                <button type="submit" className="btn btn-success mt-3 mb-3 py-2 w-100">
+                                    Crear Tema
+                                </button>
+                            }
+                            {
+                                loading &&
+                                <button type="submit" className="btn btn-success mt-3 py-2 w-100">
+                                    Creando Tema
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </form>
                 <form action="#" onSubmit={handleSubmit} method="POST">
                     <div className="row justify-content-center">
                         <div className="col-12 col-lg-9">
@@ -81,7 +158,9 @@ function CreatePostIA() {
                                     value={desc}
                                     config={config}
                                     onBlur={handleDesc}
-                                />
+                                >
+                                    
+                                </JoditEditor>
                             </label>
                             <label className="form-label w-100">
                                 <span className="small">Imagen de Portada (URL)</span>
