@@ -27,7 +27,7 @@ function Header() {
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-2">
             <div className="container">
-                <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
+                <Link to="/home" className="navbar-brand d-flex align-items-center gap-2">
                     <img src="/favicon.png" className="img-fluid w-25" />
                     <span className="m-0 ff-display h4 fw-bold">Blog</span>
                 </Link>
@@ -39,14 +39,15 @@ function Header() {
                         {
                             getToken && getRol === 'admin' ?
                                 <>
+                                    
                                     <li className="nav-item dropdown">
                                         <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dashboard
+                                            Panel
                                         </a>
                                         <ul className="dropdown-menu text-center rounded-0">
                                             <li>
                                                 <Link to="/dashboard/posteos" className="text-primary hover-link">
-                                                    Posteos
+                                                    Entradas
                                                 </Link>
                                             </li>
                                             <li><hr className="dropdown-divider"/></li>
@@ -57,20 +58,19 @@ function Header() {
                                             </li>
                                         </ul>
                                     </li>
+
+                                    <li>
+                                        <Link to="/" className="text-primary hover-link">
+                                            Blog
+                                        </Link>
+                                    </li>
                                 </>
                             : 
                                 <>
-                                    <li className="nav-item dropdown">
-                                        <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dashboard
-                                        </a>
-                                        <ul className="dropdown-menu text-center rounded-0">
-                                            <li>
-                                                <Link to="/dashboard/posteos" className="text-primary hover-link">
-                                                    Posteos
-                                                </Link>
-                                            </li>
-                                        </ul>
+                                    <li className="nav-item mt-1">
+                                        <Link to="/home" className="text-primary hover-link">
+                                            Blog
+                                        </Link>
                                     </li>
                                 </>
                         }

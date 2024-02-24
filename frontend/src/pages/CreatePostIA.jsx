@@ -77,6 +77,58 @@ function CreatePostIA() {
 
     }
 
+    const correctText = (e) => {
+        e.preventDefault()
+
+        const newTopic = {
+            prompt: desc
+        }
+
+        setLoading(true)
+
+        fetch('http://localhost:2023/Api/v1/consultasIa/sintaxis', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newTopic)
+        })
+        .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setDesc(data);
+                setLoading(false);
+        })
+        .catch(error => {
+              console.error('Error al enviar el tema:', error);
+              setLoading(false);
+        });
+    }
+    
+    const continueText = (e) => {
+        e.preventDefault()
+
+        const newTopic = {
+            prompt: desc
+        }
+
+        setLoading(true)
+
+        fetch('http://localhost:2023/Api/v1/consultasIa/completar', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newTopic)
+        })
+        .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                setDesc(data);
+                setLoading(false);
+        })
+        .catch(error => {
+                console.error('Error al enviar el tema:', error);
+                setLoading(false);
+        });
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -88,10 +140,7 @@ function CreatePostIA() {
             autor
         }
 
-
-
         setLoading(true)
-
 
         fetch("http://localhost:2023/Api/v1/entradas", {
             method: "POST",
@@ -111,34 +160,87 @@ function CreatePostIA() {
         <>
             <div className="container create-post-section">
                 <h1 className="text-center py-5 fw-bold">Crear Post con IA</h1>
-                <form action="#" onSubmit={sendTopic} method="POST">
-                    <div className="row justify-content-center">
-                        <div className="col-12 col-lg-9">
-                            <label className="form-label w-100">
-                                <span className="small">Tema</span>
-                                <input
-                                    type="text"
-                                    className="form-control mt-1"
-                                    value={prompt}
-                                    onChange={(e) => setPrompt(e.target.value)}
-                                />
-                            </label>
+                <div  className="row justify-content-center">
+                    <div className="col-md-9 d-flex justify-content-between">
 
-                            {
-                                !loading &&
-                                <button type="submit" className="btn btn-success mt-3 mb-3 py-2 w-100">
-                                    Crear Tema
-                                </button>
-                            }
-                            {
-                                loading &&
-                                <button type="submit" className="btn btn-success mt-3 py-2 w-100">
-                                    Creando Tema
-                                </button>
-                            }
+                        <div className="col-12 col-md-8">
+                            <form action="#" onSubmit={sendTopic} method="POST">
+                                <div className="row justify-content-center">
+                                    <div className="col-12 col-lg-9 d-flex flex-wrap justify-content-between ">
+                                        <label className="form-label w-100">
+                                            <span className="small">Tema</span>
+                                            <input
+                                                type="text"
+                                                className="form-control mt-1"
+                                                value={prompt}
+                                                onChange={(e) => setPrompt(e.target.value)}
+                                            />
+                                        </label>
+
+                                        {
+                                            !loading &&
+                                            <button type="submit" className="btn btn-sm btn-success mt-3 mb-3 py-2">
+                                                Crear Tema 
+                                            </button>
+                                        }
+                                        {
+                                            loading &&
+                                            <button type="submit" className="btn btn-sm btn-success mt-3 py-2 w-100">
+                                                <i class="bi bi-robot"></i> Creando...
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+
+                        <div className="col-12 col-md-4">
+                            <form action="#" onSubmit={correctText} method="POST">
+                                <div className="row justify-content-center">
+                                    <div className="d-flex col-12 col-lg-9">
+
+                                        {
+                                            !loading &&
+                                            <button type="submit" className="btn btn-warning mt-3 mb-3 py-2 w-100">
+                                                Corregir texto 
+                                            </button>
+                                        }
+                                        {
+                                            loading &&
+                                            <button type="submit" className="btn btn-warning mt-3 py-2 w-100">
+                                                <i class="bi bi-robot"></i> Creando...
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </form>
+
+                            <form action="#" onSubmit={continueText} method="POST">
+                                <div className="row justify-content-center">
+                                    <div className="d-flex col-12 col-lg-9">
+
+                                        {
+                                            !loading &&
+                                            <button type="submit" className="btn btn-primary mt-3 mb-3 py-2 w-100">
+                                                Extender texto 
+                                            </button>
+                                        }
+                                        {
+                                            loading &&
+                                            <button type="submit" className="btn btn-primary mt-3 py-2 w-100">
+                                                <i class="bi bi-robot"></i> Creando...
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
-                </form>
+
+
+                </div>
+
                 <form action="#" onSubmit={handleSubmit} method="POST">
                     <div className="row justify-content-center">
                         <div className="col-12 col-lg-9">
