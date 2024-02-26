@@ -31,6 +31,11 @@ const usuariosSchema = new mongoose.Schema({
         required: false,
         default: 0,
     },
+    suscription: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
     verifyToken: {
         type: String,
     },

@@ -12,7 +12,7 @@ function Home() {
                             <h1 className="mb-3 fw-bold">Nuestro Blog</h1>
                             <p >¡Bienvenidos a nuestro rincón digital lleno de inspiración y conocimiento! Prepárate para sumergirte en un viaje de descubrimiento y crecimiento. ¡Gracias por unirte a nuestra comunidad!</p>
                         {
-                            localStorage.getItem('contadorNoticias') >= 3 ?
+                            localStorage.getItem('contadorNoticias') >= 3 && localStorage.getItem('rol') !== 'admin' && localStorage.getItem('rol') !== 'editor' && localStorage.getItem('suscription') !== "true" ?
                             <>
                                 <div className="alert alert-danger d-flex align-items-center gap-2" role="alert">
                                     <p><strong>Llegaste al maximo de noticias noticias diarias permitidas para Usuarios sin suscripcion.</strong> Si deseas ver más noticias suscribete a un plan</p>

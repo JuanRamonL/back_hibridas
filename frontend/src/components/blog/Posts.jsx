@@ -77,7 +77,7 @@ function Posts() {
                                         { parse(post.desc) }
                                     </div>
                                     {
-                                        localStorage.getItem('contadorNoticias') >= 300  ?
+                                        localStorage.getItem('contadorNoticias') >= 3 && localStorage.getItem('rol') !== 'admin' && localStorage.getItem('rol') !== 'editor' && localStorage.getItem('suscription') !== "true" ?
                                         <>
                                         <a href="#" className="btn btn-primary btn-sm disabled" role="button" aria-disabled="true">Seguir leyendo</a>
                                         </>

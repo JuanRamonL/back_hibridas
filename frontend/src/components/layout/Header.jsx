@@ -21,6 +21,7 @@ function Header() {
             localStorage.removeItem('_id')
             localStorage.removeItem('username')
             localStorage.removeItem('contadorNoticias')
+            localStorage.removeItem('suscription')
             navigate('/iniciar-sesion')
         })
     }

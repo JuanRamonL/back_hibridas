@@ -11,6 +11,7 @@ function DetailsPost() {
     const [contadorDiario, setContadorDiario] = useState(0);
     const [idUsuario, setIdUsuario] = useState(localStorage.getItem('_id'));
 
+    //Verificamos los datos del usuario
     useEffect(() => {
         fetch(`http://localhost:2023/Api/v1/users/${idUsuario}`)
             .then(response => response.json())
@@ -20,41 +21,37 @@ function DetailsPost() {
             .finally(() => setLoading(false));
     }, [idUsuario]);
 
+    //Verificamos si hay valores en el localStorage, si los hay sumamos 1, si no, lo inicializamos en 0
     useEffect(() => {
         console.log(idUsuario);
         
-        if(localStorage.getItem('contadorNoticias')) {
+        if (localStorage.getItem('contadorNoticias')) {
             localStorage.setItem('contadorNoticias', (parseInt(localStorage.getItem('contadorNoticias')) + 1).toString());
-            const nuevoContador = localStorage.getItem('contadorNoticias');
-            /* console.log(nuevoContador); */
-        }else{
-            localStorage.setItem('contadorNoticias', contadorDiario.toString())
+        } else {
+            localStorage.setItem('contadorNoticias', contadorDiario.toString());
         }
 
-    }, [contadorDiario]);
+    }, []); 
     
+    
+    const nuevoContador = parseInt(localStorage.getItem('contadorNoticias'));
 
-    
-    const [data, setData] = useState({  
+    const nuevoValorData = {
         id: idUsuario,
-        contadorNoticias: parseInt(localStorage.getItem('contadorNoticias'))
-    });
+        contadorNoticias: nuevoContador
+    }
     
-    const handleContador = (e) => {
-        setData({ ...data, contadorNoticias: nuevoContador });
-        console.log(data);
-    };
-    
+    //Modificamos el contador de noticias del usuario
     useEffect(() => {
         fetch(`http://localhost:2023/Api/v1/users/${idUsuario}/contadorNoticias`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
+            body: JSON.stringify(nuevoValorData)
         }).then(() => {
             console.log("Se editó el contador de noticias")
         }
         )
-    }, [data]);
+    }, [nuevoContador]);
 
     
 
