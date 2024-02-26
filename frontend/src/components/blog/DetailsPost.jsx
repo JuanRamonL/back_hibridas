@@ -8,6 +8,55 @@ function DetailsPost() {
     const [postData, setPostData] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [contadorDiario, setContadorDiario] = useState(0);
+    const [idUsuario, setIdUsuario] = useState(localStorage.getItem('_id'));
+
+    useEffect(() => {
+        fetch(`http://localhost:2023/Api/v1/users/${idUsuario}`)
+            .then(response => response.json())
+            .then(data => setContadorDiario(data.contadorNoticias))
+            .then(() => console.log('Contador en la DB: '+ data.contadorNoticias))
+            .catch(error => setError(error))
+            .finally(() => setLoading(false));
+    }, [idUsuario]);
+
+    useEffect(() => {
+        console.log(idUsuario);
+        
+        if(localStorage.getItem('contadorNoticias')) {
+            localStorage.setItem('contadorNoticias', (parseInt(localStorage.getItem('contadorNoticias')) + 1).toString());
+            const nuevoContador = localStorage.getItem('contadorNoticias');
+            /* console.log(nuevoContador); */
+        }else{
+            localStorage.setItem('contadorNoticias', contadorDiario.toString())
+        }
+
+    }, [contadorDiario]);
+    
+
+    
+    const [data, setData] = useState({  
+        id: idUsuario,
+        contadorNoticias: parseInt(localStorage.getItem('contadorNoticias'))
+    });
+    
+    const handleContador = (e) => {
+        setData({ ...data, contadorNoticias: nuevoContador });
+        console.log(data);
+    };
+    
+    useEffect(() => {
+        fetch(`http://localhost:2023/Api/v1/users/${idUsuario}/contadorNoticias`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        }).then(() => {
+            console.log("Se editó el contador de noticias")
+        }
+        )
+    }, [data]);
+
+    
 
     useEffect(() => {
         setLoading(true);

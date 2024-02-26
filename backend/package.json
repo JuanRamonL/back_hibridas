@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "cls && nodemon index.js",
     "mandale": "cls && nodemon index.js"
   },
   "author": "Lopez Juan, Quintana Alex",
@@ -23,7 +23,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.1",
-    "nanoid": "^5.0.3"
+    "nanoid": "^5.0.3",
+    "nodemailer": "^6.9.9"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

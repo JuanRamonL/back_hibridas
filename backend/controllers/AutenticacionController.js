@@ -2,6 +2,16 @@ import { Usuarios } from '../models/UsuariosSchema.js';
 import jwt from 'jsonwebtoken';
 import { NuevotokenUser, tokengenerate } from '../utils/tokengenerate.js';
 import { nuevoSecret } from '../utils/tokengenerate.js';
+import noemailer from 'nodemailer';
+
+//configuración de email
+const transporter = noemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'bloghibridas@gmail.com',
+        pass: 'BlogHibridas2023!',
+    }
+});
 
 export const register = async(req, res) => {
     const { username, email, password, rol } = req.body;
@@ -10,7 +20,8 @@ export const register = async(req, res) => {
             username,
             email, 
             password,
-            rol
+            rol:'user',
+            contadorNoticias : 0
         });
         await user.save();
 
@@ -44,6 +55,7 @@ export const login =  async(req, res) => {
 
         let rol = user.rol
         let userid = user._id
+        let contadorNoticias = user.contadorNoticias
 
         if(!user){
             return res.status(403).json({
@@ -63,7 +75,7 @@ export const login =  async(req, res) => {
         
         NuevotokenUser(user._id, res); //Utilizamos la nuevav cookie para el refreshToken
 
-        return res.json({token, expiresIn, rol, userid, username});
+        return res.json({token, expiresIn, rol, userid, username, contadorNoticias});
 
     }catch(error){
         console.log(error);
@@ -103,6 +115,8 @@ export const protectedRoute = async(req, res) => {
         });
     }
 }
+
+
 
 export const refreshToken = (req, res) => {
     try{

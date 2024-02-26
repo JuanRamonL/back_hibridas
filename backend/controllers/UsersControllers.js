@@ -34,6 +34,24 @@ export const modificar = async (req, res) => {
     }
 };
 
+export const modificarcontadorNoticias = async (req, res) => {
+    try {
+        const { id } = req.params; // Obtener el id de los parámetros de la URL
+        const { contadorNoticias } = req.body; // Obtener contadorNoticias del cuerpo de la solicitud
+        console.log(req.body);
+        
+        const user = await Usuarios.findByIdAndUpdate(id, { contadorNoticias });
+        // Suponiendo que findByIdAndUpdate es una función válida para actualizar el usuario
+        // Pero debes implementarla o usar la que corresponda a tu base de datos
+        
+        res.status(200).json({ Estado: "Contador de noticias actualizado exitosamente" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ Estado: "No se pudo actualizar el contador de noticias" });
+    }
+};
+
+
 export const eliminar = (req, res) => {
     res.json({Estado: "OK"});
 };

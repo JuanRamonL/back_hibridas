@@ -31,10 +31,19 @@ function DashboardPosts() {
                 <h2 className="fw-bold">Posteos publicados</h2>
                 {
                     getRol !== 'user' ?
-                    <Link to="/post/crear" className="btn btn-primary d-flex align-items-center gap-2">
-                        <i className='bx bx-plus fs-5'></i>
-                        Crear Post
-                    </Link>
+                    <div className="d-flex align-items-center gap-2">
+
+                        <Link to="/post/crear" className="btn btn-primary d-flex align-items-center gap-2">
+                            <i className='bx bx-plus fs-5'></i>
+                            Crear Post manual
+                        </Link>
+
+                        <Link to="/post/crearIA" className="btn btn-success d-flex align-items-center gap-2">
+                            <i className='bx bx-plus fs-5'></i>
+                            Crear Post con IA
+                        </Link>
+
+                    </div>
                     : ''
                 }
             </div>

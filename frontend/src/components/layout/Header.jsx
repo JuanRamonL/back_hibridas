@@ -18,8 +18,9 @@ function Header() {
         .then(() => {
             localStorage.removeItem('token')
             localStorage.removeItem('rol')
-            localStorage.removeItem('username')
             localStorage.removeItem('_id')
+            localStorage.removeItem('username')
+            localStorage.removeItem('contadorNoticias')
             navigate('/iniciar-sesion')
         })
     }
@@ -27,7 +28,7 @@ function Header() {
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-2">
             <div className="container">
-                <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
+                <Link to="/home" className="navbar-brand d-flex align-items-center gap-2">
                     <img src="/favicon.png" className="img-fluid w-25" />
                     <span className="m-0 ff-display h4 fw-bold">Blog</span>
                 </Link>
@@ -36,45 +37,38 @@ function Header() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav gap-4 py-4 p-lg-0 text-center ms-auto align-items-center">
+                        <li className="mt-1">
+                            <Link to="/home" className="text-primary hover-link">
+                                Blog
+                            </Link>
+                        </li>
                         {
-                            getToken && getRol === 'admin' ?
+                            getToken && getRol === 'admin' ||  getToken && getRol === 'editor' ?
                                 <>
-                                    <li className="nav-item dropdown">
-                                        <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dashboard
-                                        </a>
-                                        <ul className="dropdown-menu text-center rounded-0">
-                                            <li>
-                                                <Link to="/dashboard/posteos" className="text-primary hover-link">
-                                                    Posteos
-                                                </Link>
-                                            </li>
-                                            <li><hr className="dropdown-divider"/></li>
-                                            <li>
-                                                <Link to="/dashboard/usuarios" className="text-primary hover-link">
-                                                    Usuarios
-                                                </Link>
-                                            </li>
-                                        </ul>
+                                    <li className="mt-1">
+                                        <Link to="/dashboard/posteos" className="text-primary hover-link">
+                                            Mis entradas
+                                        </Link>
                                     </li>
                                 </>
                             : 
                                 <>
-                                    <li className="nav-item dropdown">
-                                        <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Dashboard
-                                        </a>
-                                        <ul className="dropdown-menu text-center rounded-0">
-                                            <li>
-                                                <Link to="/dashboard/posteos" className="text-primary hover-link">
-                                                    Posteos
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </li>
                                 </>
                         }
+                        {
+                            getToken && getRol === 'admin' ?
+                            <>
+                                <li className="mt-1">
+                                    <Link to="/dashboard/usuarios" className="text-primary hover-link">
+                                        Usuarios
+                                    </Link>
+                                </li>
 
+                            </>
+                        : 
+                            <>
+                            </>
+                        }
                         {
                             !getToken ?
                                 <>
