@@ -7,6 +7,7 @@ function Register() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [rol] = useState('user')
+    const [contadorNoticias] = useState(0)
     const [errors, setErrors] = useState('')
 
     const navigate = useNavigate()
@@ -19,7 +20,7 @@ function Register() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, email, password, rol })
+            body: JSON.stringify({ username, email, password, rol, contadorNoticias })
         })
 
         console.log(response)

@@ -18,8 +18,9 @@ function Header() {
         .then(() => {
             localStorage.removeItem('token')
             localStorage.removeItem('rol')
-            localStorage.removeItem('username')
             localStorage.removeItem('_id')
+            localStorage.removeItem('username')
+            localStorage.removeItem('contadorNoticias')
             navigate('/iniciar-sesion')
         })
     }
@@ -36,45 +37,38 @@ function Header() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav gap-4 py-4 p-lg-0 text-center ms-auto align-items-center">
+                        <li className="mt-1">
+                            <Link to="/home" className="text-primary hover-link">
+                                Blog
+                            </Link>
+                        </li>
                         {
-                            getToken && getRol === 'admin' ?
+                            getToken && getRol === 'admin' ||  getToken && getRol === 'editor' ?
                                 <>
-                                    
-                                    <li className="nav-item dropdown">
-                                        <a className="nav-link text-primary hover-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Panel
-                                        </a>
-                                        <ul className="dropdown-menu text-center rounded-0">
-                                            <li>
-                                                <Link to="/dashboard/posteos" className="text-primary hover-link">
-                                                    Entradas
-                                                </Link>
-                                            </li>
-                                            <li><hr className="dropdown-divider"/></li>
-                                            <li>
-                                                <Link to="/dashboard/usuarios" className="text-primary hover-link">
-                                                    Usuarios
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                    <li>
-                                        <Link to="/" className="text-primary hover-link">
-                                            Blog
+                                    <li className="mt-1">
+                                        <Link to="/dashboard/posteos" className="text-primary hover-link">
+                                            Mis entradas
                                         </Link>
                                     </li>
                                 </>
                             : 
                                 <>
-                                    <li className="nav-item mt-1">
-                                        <Link to="/home" className="text-primary hover-link">
-                                            Blog
-                                        </Link>
-                                    </li>
                                 </>
                         }
+                        {
+                            getToken && getRol === 'admin' ?
+                            <>
+                                <li className="mt-1">
+                                    <Link to="/dashboard/usuarios" className="text-primary hover-link">
+                                        Usuarios
+                                    </Link>
+                                </li>
 
+                            </>
+                        : 
+                            <>
+                            </>
+                        }
                         {
                             !getToken ?
                                 <>

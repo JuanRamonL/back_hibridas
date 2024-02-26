@@ -7,6 +7,7 @@ function Login() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState('')
+    const [contenidolocalStorage, setLocalStorage] = useState(localStorage.getItem('username') || '')
 
     const navigate = useNavigate()
 
@@ -29,6 +30,7 @@ function Login() {
             localStorage.setItem('username', res.username)
             localStorage.setItem('rol', res.rol)
             localStorage.setItem('token', res.token)
+            localStorage.setItem('contadorNoticias', res.contadorNoticias)
             navigate('/')
         } else if(!response.ok && password == '' ) {
             //alert(res.errors[0].msg)

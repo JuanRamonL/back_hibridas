@@ -26,6 +26,11 @@ const usuariosSchema = new mongoose.Schema({
         required: false,
         default:"",
     },
+    contadorNoticias: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
     verifyToken: {
         type: String,
     },

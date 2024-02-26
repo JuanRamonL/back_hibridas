@@ -7,6 +7,16 @@ function Posts() {
     const [data, setData] = useState([])
     const [hasMore, setHasMore] = useState(true)
     const [endMessage, setEndMessage] = useState('')
+    const [contadorDiario, setContadorDiario] = useState(0)
+
+    //Se ejecuta una sola vez, cuando el componente se monta
+    useEffect(() => {
+        if(localStorage.getItem('contadorNoticias')) {
+            setContadorDiario(parseInt(localStorage.getItem('contadorNoticias')))
+        }else{
+            localStorage.setItem('contadorNoticias', contadorDiario.toString())
+        }
+    }, [contadorDiario])
 
     const elementRef = useRef(null)
 
@@ -66,9 +76,19 @@ function Posts() {
                                     <div className="text-clamp mb-3">
                                         { parse(post.desc) }
                                     </div>
-                                    <Link to={`/post/${post._id}`} className="btn btn-primary btn-sm">
-                                        Seguir leyendo
-                                    </Link>
+                                    {
+                                        localStorage.getItem('contadorNoticias') >= 300  ?
+                                        <>
+                                        <a href="#" className="btn btn-primary btn-sm disabled" role="button" aria-disabled="true">Seguir leyendo</a>
+                                        </>
+                                        :
+                                        <>
+                                        <Link to={`/post/${post._id}`}  className="btn btn-primary btn-sm">
+                                            Seguir leyendo
+                                        </Link>
+                                        </>
+                                    }
+
                                 </div>
                             </div>
                         </div>

@@ -20,7 +20,8 @@ export const register = async(req, res) => {
             username,
             email, 
             password,
-            rol
+            rol:'user',
+            contadorNoticias : 0
         });
         await user.save();
 
@@ -54,6 +55,7 @@ export const login =  async(req, res) => {
 
         let rol = user.rol
         let userid = user._id
+        let contadorNoticias = user.contadorNoticias
 
         if(!user){
             return res.status(403).json({
@@ -73,7 +75,7 @@ export const login =  async(req, res) => {
         
         NuevotokenUser(user._id, res); //Utilizamos la nuevav cookie para el refreshToken
 
-        return res.json({token, expiresIn, rol, userid, username});
+        return res.json({token, expiresIn, rol, userid, username, contadorNoticias});
 
     }catch(error){
         console.log(error);
