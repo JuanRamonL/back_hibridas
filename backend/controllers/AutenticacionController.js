@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { NuevotokenUser, tokengenerate } from '../utils/tokengenerate.js';
 import { nuevoSecret } from '../utils/tokengenerate.js';
 import noemailer from 'nodemailer';
+import cron from 'node-cron';
 
 //configuración de email
 const transporter = noemailer.createTransport({
@@ -118,6 +119,36 @@ export const protectedRoute = async(req, res) => {
     }
 }
 
+// Resetea el contador de noticias de cada usuario a las 00:00 horas 
+const recetearContador = async(req, res) => {
+    try{
+        // Tarea programada para ejecutar a las 00:00 horas todos los días
+        cron.schedule('0 0 * * *', async () => {
+            try {
+                // Obtener todos los usuarios
+                const usuarios = await Usuarios.find().lean();
+
+                // Resetear el contador de noticias de cada usuario
+                for (const usuario of usuarios) {
+                    usuario.contadorNoticias = 0;
+                    await Usuarios.findByIdAndUpdate(usuario._id, usuario);
+                }
+
+                console.log('Contador de noticias reseteado para todos los usuarios');
+            } catch (error) {
+                console.log('Error al resetear el contador de noticias:', error);
+            }
+        });
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            Estado: "ERROR",
+            Mensaje: "Error al obtener el usuario"
+        });
+    }
+}
+
+recetearContador()
 
 
 export const refreshToken = (req, res) => {

@@ -1,4 +1,5 @@
 import Posts from "../components/blog/Posts"
+import { Link } from "react-router-dom"
 
 
 function Home() {
@@ -14,9 +15,14 @@ function Home() {
                         {
                             localStorage.getItem('contadorNoticias') >= 3 && localStorage.getItem('rol') !== 'admin' && localStorage.getItem('rol') !== 'editor' && localStorage.getItem('suscription') !== "true" ?
                             <>
-                                <div className="alert alert-danger d-flex align-items-center gap-2" role="alert">
-                                    <p><strong>Llegaste al maximo de noticias noticias diarias permitidas para Usuarios sin suscripcion.</strong> Si deseas ver más noticias suscribete a un plan</p>
-                                    <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <div className="alert alert-danger " role="alert">
+                                    <div className="d-flex gap-2">
+                                        <p>Llegaste al máximo de noticias disponibles diarias permitidas para usuarios sin suscripción <b>(3)</b>. Si deseas ver más noticias, pueder esperar hasta las 00:00hs o también puedes suscribirte a un plan para disfrutar de todo nuestro contenido sin límites diarios.</p>
+                                        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <Link  to="/suscribirme">
+                                        <p className="btn btn-primary mb-0">Suscribirme</p>
+                                    </Link>
                                 </div>
                             </>
                             :

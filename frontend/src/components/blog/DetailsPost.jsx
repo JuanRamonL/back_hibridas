@@ -66,7 +66,6 @@ function DetailsPost() {
 
     return (
         <>
-            {error && <span>Mensaje de error</span>}
             {loading && (
                 <span>
                     <i className='bx bx-loader-alt bx-spin fs-1'></i>

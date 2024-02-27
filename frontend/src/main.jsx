@@ -21,6 +21,7 @@ import DashboardUsers from './pages/DashboardUsers.jsx'
 import EditUser from './pages/EditUser.jsx'
 import ResetPassword from './pages/ResetPassword.jsx'
 import CreatePostIA from './pages/CreatePostIA.jsx'
+import Subscribe from './pages/Subscribe.jsx'
 
 
 const router = createBrowserRouter([
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
                     {
                         path: 'post/:id',
                         element: <DetailsPost/>,
+                    },
+                    {
+                        path: 'suscribirme',
+                        element: <Subscribe/>
                     },
                     {
                         path: 'post',
@@ -146,7 +151,8 @@ const router = createBrowserRouter([
                         element: <ResetPassword/>
                     }
                 ]
-            }
+            },
+            
         ]
     }
 ])
