@@ -32,8 +32,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-                <div>
-                </div>
+                
                 <div className="mb-5">
                     <h2 className="fw-bold mb-4">Posteos recientes</h2>
                     <div className="row g-5">
