@@ -22,6 +22,9 @@ function Header() {
             localStorage.removeItem('username')
             localStorage.removeItem('contadorNoticias')
             localStorage.removeItem('suscription')
+            localStorage.removeItem('trafficLightSendData')
+            localStorage.removeItem('trafficLightBase64')
+            localStorage.removeItem('trafficLightWhitelist')
             navigate('/iniciar-sesion')
         })
     }

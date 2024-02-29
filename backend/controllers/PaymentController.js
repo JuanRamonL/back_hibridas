@@ -1,5 +1,6 @@
 import { MercadoPagoConfig, Preference } from 'mercadopago';
 import { Payment } from '../models/PaymentSchema.js';
+import { Usuarios } from '../models/UsuariosSchema.js';
 
 const apiKeyMercadoPago = 'TEST-3078465502370344-022812-6d95a34377f257019b3521cd2845cbf9-344312195'; 
 const client = new MercadoPagoConfig({ accessToken: apiKeyMercadoPago });
@@ -51,12 +52,34 @@ export const savePayment = async (req, res) => {
         
         const savedPayment = await payment.save();
         
-        /* await payment.save(); */
+        await payment.save();
         
         res.status(201).json(savedPayment);
 
     } catch (error) {
         console.error('Error al guardar el pago:', error);
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const vincularSuscripcion = async (req, res) => {
+    try {
+        const { id_user, payment_id } = req.body;
+        console.log(req.body);
+
+        const payment = await Payment.findOne({ payment_id: payment_id });
+
+        const user = await Usuarios.findById({ _id: id_user });
+
+        if(payment.collection_status == 'approved' && payment.id_user == user._id){
+            user.suscription = true;
+        }
+        const updatedUser = await user.save();
+
+        res.status(201).json(updatedUser);
+
+    }catch (error) {
+        console.error('Error al vincular la suscripción:', error);
         res.status(500).json({ message: error.message });
     }
 }

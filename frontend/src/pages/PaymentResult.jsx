@@ -1,4 +1,5 @@
-
+import React from 'react';
+import { Link } from 'react-router-dom';
 function PaymentResult() {
     // Obtener la url actual
     const url = window.location.href;
@@ -8,6 +9,7 @@ function PaymentResult() {
     // Separar la url por el signo "&"
     const uri = respuesta[1].split('&');
     // Separar la url por el signo "="
+    const id =  localStorage.getItem('_id');
     const collection_id = uri[0].split('=')[1];
     const collection_status = uri[1].split('=')[1];
     const payment_id = uri[2].split('=')[1];
@@ -18,8 +20,8 @@ function PaymentResult() {
     const site_id = uri[7].split('=')[1];
     const processing_mode = uri[8].split('=')[1];
 
-    const datosAguardar = {
-        id_user: localStorage.getItem('_id'),
+    const datosPago = {
+        id_user: id,
         collection_id: collection_id,
         collection_status: collection_status,
         payment_id: payment_id,
@@ -30,16 +32,24 @@ function PaymentResult() {
         site_id: site_id,
         processing_mode: processing_mode
     }
+    /* console.log(datosPago); */
+
+
+    const datosAguardar = {
+        id_user: id,
+        payment_id: payment_id
+    }
+     console.log(datosAguardar); 
    
 
-    const guardarPago = async () => {
+     const guardarPago = async () => {
         try {
             const response = await fetch('http://localhost:2023/Api/v1/payment/save-payment', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(datosAguardar)
+                body: JSON.stringify(datosPago)
             });
 
             const data = await response.json();
@@ -49,14 +59,42 @@ function PaymentResult() {
         }
     } 
 
+    const vincularSuscripcion = async () => {
+        try {
+            const response = await fetch('http://localhost:2023/Api/v1/payment/vincular-suscripcion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datosAguardar)
+            });
+
+            const data = await response.json();
+            console.log('Datos guardados: ',data);
+            localStorage.setItem('suscription', data.suscription);
+
+        } catch (error) {
+            console.error('Error al vincular la suscripción:', error);
+        }
+    }
+
     guardarPago();
+
+    
+    vincularSuscripcion();
    
 
     return (
         <>
-            <div>
-                <h1>Resultado del pago</h1>
+            <div className="container hero-section text-center flex justify-content-center">
+                <div className=" text-center align-items-center">
+                    <h1>Resultado del pago</h1>
+                    <Link to="/home" className="btn btn-primary btn-sm">
+                    Volver al inicio
+                    </Link>
+                </div>
             </div>
+
         </>
     )
 }
