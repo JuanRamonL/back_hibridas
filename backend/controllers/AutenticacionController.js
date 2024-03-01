@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { NuevotokenUser, tokengenerate } from '../utils/tokengenerate.js';
 import { nuevoSecret } from '../utils/tokengenerate.js';
 import noemailer from 'nodemailer';
+import cron from 'node-cron';
 
 //configuración de email
 const transporter = noemailer.createTransport({
@@ -21,7 +22,8 @@ export const register = async(req, res) => {
             email, 
             password,
             rol:'user',
-            contadorNoticias : 0
+            contadorNoticias : 0,
+            suscription: false
         });
         await user.save();
 
@@ -56,6 +58,7 @@ export const login =  async(req, res) => {
         let rol = user.rol
         let userid = user._id
         let contadorNoticias = user.contadorNoticias
+        let suscription = user.suscription
 
         if(!user){
             return res.status(403).json({
@@ -75,7 +78,7 @@ export const login =  async(req, res) => {
         
         NuevotokenUser(user._id, res); //Utilizamos la nuevav cookie para el refreshToken
 
-        return res.json({token, expiresIn, rol, userid, username, contadorNoticias});
+        return res.json({token, expiresIn, rol, userid, username, contadorNoticias, suscription});
 
     }catch(error){
         console.log(error);
@@ -116,6 +119,36 @@ export const protectedRoute = async(req, res) => {
     }
 }
 
+// Resetea el contador de noticias de cada usuario a las 00:00 horas 
+const recetearContador = async(req, res) => {
+    try{
+        // Tarea programada para ejecutar a las 00:00 horas todos los días
+        cron.schedule('0 0 * * *', async () => {
+            try {
+                // Obtener todos los usuarios
+                const usuarios = await Usuarios.find().lean();
+
+                // Resetear el contador de noticias de cada usuario
+                for (const usuario of usuarios) {
+                    usuario.contadorNoticias = 0;
+                    await Usuarios.findByIdAndUpdate(usuario._id, usuario);
+                }
+
+                console.log('Contador de noticias reseteado para todos los usuarios');
+            } catch (error) {
+                console.log('Error al resetear el contador de noticias:', error);
+            }
+        });
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({
+            Estado: "ERROR",
+            Mensaje: "Error al obtener el usuario"
+        });
+    }
+}
+
+recetearContador()
 
 
 export const refreshToken = (req, res) => {

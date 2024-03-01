@@ -11,6 +11,7 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "^0.0.18",
     "draft-js": "^0.11.7",
     "html-react-parser": "^5.0.6",
     "jodit-react": "^1.3.39",

@@ -31,6 +31,8 @@ function Login() {
             localStorage.setItem('rol', res.rol)
             localStorage.setItem('token', res.token)
             localStorage.setItem('contadorNoticias', res.contadorNoticias)
+            localStorage.setItem('suscription', res.suscription)
+            
             navigate('/')
         } else if(!response.ok && password == '' ) {
             //alert(res.errors[0].msg)
