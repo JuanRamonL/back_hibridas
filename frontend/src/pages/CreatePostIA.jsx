@@ -1,9 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom"
 import JoditEditor from 'jodit-react'
-import { set } from "mongoose";
-
-
 
 function CreatePostIA() {
 
@@ -71,8 +68,8 @@ function CreatePostIA() {
             setLoading(false);
     })
     .catch(error => {
-          console.error('Error al enviar el tema:', error);
-          setLoading(false);
+        console.error('Error al enviar el tema:', error);
+        setLoading(false);
     });
 
     }
@@ -98,8 +95,8 @@ function CreatePostIA() {
                 setLoading(false);
         })
         .catch(error => {
-              console.error('Error al enviar el tema:', error);
-              setLoading(false);
+            console.error('Error al enviar el tema:', error);
+            setLoading(false);
         });
     }
     
@@ -163,9 +160,9 @@ function CreatePostIA() {
                 <div  className="row justify-content-center">
                     <div className="col-md-9 d-flex justify-content-between">
 
-                        <div className="col-12 col-md-8">
+                        <div className="col-12 col-md-6">
                             <form action="#" onSubmit={sendTopic} method="POST">
-                                <div className="row justify-content-center">
+                                <div className="row">
                                     <div className="col-12 col-lg-9 d-flex flex-wrap justify-content-between ">
                                         <label className="form-label w-100">
                                             <span className="small">Tema</span>
@@ -179,14 +176,14 @@ function CreatePostIA() {
 
                                         {
                                             !loading &&
-                                            <button type="submit" className="btn btn-sm btn-success mt-3 mb-3 py-2">
-                                                Crear Tema 
+                                            <button type="submit" className="btn btn-success d-flex align-items-center mt-2 mb-3 gap-2">
+                                                <i className='bx bx-text' ></i> Crear Tema 
                                             </button>
                                         }
                                         {
                                             loading &&
                                             <button type="submit" className="btn btn-sm btn-success mt-3 py-2 w-100">
-                                                <i class="bi bi-robot"></i> Creando...
+                                                <i className="bi bi-robot"></i> Creando...
                                             </button>
                                         }
                                     </div>
@@ -194,21 +191,22 @@ function CreatePostIA() {
                             </form>
                         </div>
 
-                        <div className="col-12 col-md-4">
+                        <div className="col-12 col-md-6">
                             <form action="#" onSubmit={correctText} method="POST">
-                                <div className="row justify-content-center">
-                                    <div className="d-flex col-12 col-lg-9">
+                                <div className="row justify-content-end">
+                                    <div className="d-flex col-12 col-lg-6">
 
                                         {
                                             !loading &&
-                                            <button type="submit" className="btn btn-warning mt-3 mb-3 py-2 w-100">
+                                            <button type="submit" className="btn btn-warning d-flex align-items-center gap-2">
+                                                <i className='bx bx-edit-alt'></i>
                                                 Corregir texto 
                                             </button>
                                         }
                                         {
                                             loading &&
-                                            <button type="submit" className="btn btn-warning mt-3 py-2 w-100">
-                                                <i class="bi bi-robot"></i> Creando...
+                                            <button type="submit" className="btn btn-warning d-flex align-items-center gap-2">
+                                                <i className="bi bi-robot"></i> Corrigiendo...
                                             </button>
                                         }
                                     </div>
@@ -216,19 +214,18 @@ function CreatePostIA() {
                             </form>
 
                             <form action="#" onSubmit={continueText} method="POST">
-                                <div className="row justify-content-center">
-                                    <div className="d-flex col-12 col-lg-9">
-
+                                <div className="row justify-content-end">
+                                    <div className="d-flex col-12 col-lg-6 gy-3">
                                         {
                                             !loading &&
-                                            <button type="submit" className="btn btn-primary mt-3 mb-3 py-2 w-100">
-                                                Extender texto 
+                                            <button type="submit" className="btn btn-primary d-flex align-items-center gap-2">
+                                                <i className='bx bx-list-plus'></i> Extender texto 
                                             </button>
                                         }
                                         {
                                             loading &&
-                                            <button type="submit" className="btn btn-primary mt-3 py-2 w-100">
-                                                <i class="bi bi-robot"></i> Creando...
+                                            <button type="submit" className="btn btn-primary d-flex align-items-center gap-2">
+                                                <i className="bi bi-robot"></i> Extendiendo...
                                             </button>
                                         }
                                     </div>

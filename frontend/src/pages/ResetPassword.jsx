@@ -1,12 +1,12 @@
-import { set } from "mongoose"
+
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 function ResetPassword() {
     const [password, setPassword] = useState('')
     const { id, token } = useParams()
-    const[errors, setErrors] = useState(null)
-    const[message, setMessage] = useState(null)
+    const [errors, setErrors] = useState(null)
+    const [message, setMessage] = useState(null)
     const history = useNavigate() 
 
     

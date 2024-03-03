@@ -23,6 +23,16 @@ function Profile() {
                             <img className="rounded-pill object-fit-cover" width={200} height={200} src={userData.profilePic || '/no-profile-image.png'} alt="" />
                             <h1 className="fw-bold fs-2 mt-3">{ userData.username }</h1>
                             <p>{ userData.email }</p>
+                            <p className={ 
+                                userData.suscription == true
+                                ? 'fw-bold text-decoration-underline text-primary'
+                                : 'fw-bold text-decoration-underline text-danger'
+                            }>
+                                { userData.suscription == true
+                                    ? 'Suscripción activa'
+                                    : 'Sin suscripción'
+                                }
+                            </p>
                             <Link to={`/perfil/${id}/editar`} className='btn btn-warning btn-sm d-flex py-2'>
                                 <i className='bx bx-edit me-2 fs-5'></i>
                                 Editar Perfil
