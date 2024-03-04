@@ -39,7 +39,7 @@ function DashboardPosts() {
                         </Link>
 
                         <Link to="/post/crearIA" className="btn btn-success d-flex align-items-center gap-2">
-                            <i className='bx bx-plus fs-5'></i>
+                            <i className="bi bi-robot"></i>
                             Crear Post con IA
                         </Link>
 
