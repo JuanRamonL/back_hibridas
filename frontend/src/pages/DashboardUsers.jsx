@@ -28,6 +28,7 @@ function DashboardUsers() {
                             <th>Nombre</th>
                             <th>Correo electrónico</th>
                             <th>Rol</th>
+                            <th>Suscripción</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
@@ -38,6 +39,16 @@ function DashboardUsers() {
                                     <td>{user.username}</td>
                                     <td>{user.email}</td>
                                     <td>{user.rol}</td>
+                                    <td className={ 
+                                        user.suscription == true
+                                        ? 'fw-bold text-decoration-underline text-primary'
+                                        : 'fw-bold text-decoration-underline text-danger'
+                                    }>
+                                        { user.suscription == true
+                                            ? 'Suscripción activa'
+                                            : 'Sin suscripción'
+                                        }
+                                    </td>
                                     <td>
                                         <div className='d-flex justify-content-center'>
                                             <Link to={`/usuario/${user._id}/editar`} className='btn btn-warning btn-sm d-flex py-2'>

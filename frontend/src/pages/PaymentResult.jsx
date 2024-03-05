@@ -86,9 +86,14 @@ function PaymentResult() {
 
     return (
         <>
-            <div className="container hero-section text-center flex justify-content-center">
+            <div className="container hero-section text-center flex justify-content-center py-5">
                 <div className=" text-center align-items-center">
                     <h1>Resultado del pago</h1>
+                    {
+                        status == 'approved'
+                        ? <h2 className='py-3'>Se ha activado la suscripción</h2>
+                        : <h2>No se pudo procesar el pago</h2>
+                    }
                     <Link to="/home" className="btn btn-primary btn-sm">
                     Volver al inicio
                     </Link>
